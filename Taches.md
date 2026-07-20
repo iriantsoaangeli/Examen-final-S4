@@ -21,24 +21,27 @@ client:
 
 ```
 # Taches
-- Creation du db Sqlite (Angeli)
-- Creation de la base.sql (Angeli)
-- Creation des tables de la base (Angeli)
-- Creation de la page de login (Angeli)
-  - login avec numero , no pwd (Angeli)
-- Creation des endpoints pour: (Angeli)
-  - landing-page
+- Templates (Angeli)
+- Creation du db Sqlite                                             (Angeli)
+- Creation de la base.sql                                           (Angeli)
+- Creation des tables de la base                                    (Angeli)
+- Creation de la page de login                                      (Angeli)
+- login avec numero , no pwd:                                       (Angeli)
+    - verification regex (num, prefix)
+    - sauvegarde dans la base
+- Creation des endpoints pour:
+  - landing-page                                                    (Angeli)
     - accueil
     - plus lien vers les actions
-  - depot (Randy)
+  - depot                                                           (Randy)
     - page pour faire depot
     - automatique, format nombre
-  - retrait (Randy)
+  - retrait                                                         (Randy)
     - page pour faire retrait
     - automatique, format nombre
-  - transfert (Randy)
+  - transfert                                                       (Randy)
     - page pour faire transfert
     - choix numero(existe)
     - format nombre
-  - historiques(regarder seulement id: retrait et transfert) (Randy)
+  - historiques(regarder seulement id: retrait et transfert)        (Randy)
     - page pour regarder historique de retrait et transfert
