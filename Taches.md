@@ -105,5 +105,13 @@ mvt_details :
     - [x] liste des clients
     - [x] numéro, nom et solde
     - [x] masquer le fournisseur invisible
-
+  - [ ] Mise a jour base de donnees                                 
+    - [ ] Ajouter d'autres operateur                                (Angeli)
+      - [ ] Ajouter Airtel,Tout les numeros yas                     (Angeli)
+  - [ ] Creer le filtre OPFilter.php
+    - [ ] Empecher l'acces a la deuxieme page d'envoi 
+    - [ ] Creer une copie de la page envoi , envoi multiple disponible                   (Angeli)
+  - [ ] Modifier Controllers\operations\Opearationi pour splitter lors d'envoi multiple  (Angeli)
+  - [ ] Creer la page Situation gain via differents frais           (Randy)
+    - [ ] Ajouter situation de montant pour chaque operateur        (Randy)
 ---
