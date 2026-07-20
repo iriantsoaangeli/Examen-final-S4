@@ -31,3 +31,6 @@ $routes->post('operations/transfert', 'operations\Operation::transfert');
 $routes->get('operations/historique/(:segment)', 'operations\Operation::historique/$1');
 $routes->get('operations/situation/gains', 'operations\Operation::gains');
 $routes->get('operations/situation/comptes', 'operations\Operation::comptes');
+
+$routes->get('rapports', 'rapports\Commission::index');
+$routes->get('rapports/comptes', 'rapports\Commission::comptes');
