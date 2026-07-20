@@ -105,9 +105,10 @@ mvt_details :
     - [x] liste des clients
     - [x] numéro, nom et solde
     - [x] masquer le fournisseur invisible
-  - [ ] Mise a jour base de donnees                                 
-    - [ ] Ajouter d'autres operateur                                (Angeli)
-      - [ ] Ajouter Airtel,Tout les numeros yas                     (Angeli)
+  - [x] Mise a jour base de donnees                                 
+    - [x] Ajouter d'autres operateur                                (Angeli)
+      - [x] Ajouter Airtel,Tout les numeros yas                     (Angeli)
+      - [ ] Ajout de notre propre operteur
   - [ ] Creer le filtre OPFilter.php
     - [ ] Empecher l'acces a la deuxieme page d'envoi 
     - [ ] Creer une copie de la page envoi, envoi                   (Angeli)
@@ -118,6 +119,6 @@ mvt_details :
     - [ ] Ajouter situation de montant pour chaque operateur        (Randy)
     - [ ] Creer le controller app/Controllers/rapports/Rapport.php  (Randy)
       - [ ] Fonction: 
-        - [ ] - gainsParOperateurs(gains pour chaques operateurs)
-        - [ ] - montantsAEnvoyer(du aux autres operateurs)
+        - [ ] - gainsParOperateurs(gains pour chaques operateurs)   (Randy)
+        - [ ] - montantsAEnvoyer(du aux autres operateurs)          (Randy)
 ---
