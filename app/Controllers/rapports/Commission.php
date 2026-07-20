@@ -26,7 +26,21 @@ class Commission extends BaseController
             'activePage' => 'rapports',
             'commissionsParOperateur' => $this->commissionModel->getCommissionsParOperateur(),
             'montantsAEnvoyer' => $this->commissionModel->getMontantsAEnvoyerParOperateur(),
+        ]);
+    }
+
+    public function bareme()
+    {
+        return view('rapports/bareme', [
+            'activePage' => 'rapports',
             'configurationCommissions' => $this->commissionModel->getConfigurationCommissions(),
+        ]);
+    }
+
+    public function operateurs()
+    {
+        return view('rapports/operateurs', [
+            'activePage' => 'rapports',
             'operateursProviders' => $this->prefixModel->operatorsWithProviders(),
         ]);
     }

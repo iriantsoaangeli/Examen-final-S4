@@ -19,11 +19,12 @@ class CommissionModel extends Model
              receiver_operator.id AS receiver_operator_id,
              receiver_operator.name AS receiver_operator_name,
              CASE
-                WHEN sender_operator.id = receiver_operator.id THEN "interne"
-                ELSE "inter_operateur"
+                WHEN sender_operator.id = receiver_operator.id THEN \'interne\'
+                ELSE \'inter_operateur\'
              END AS type_commission,
              SUM(mvt_commission.montant) AS total_commission,
-             COUNT(mvt_commission.id) AS nombre_operations'
+             COUNT(mvt_commission.id) AS nombre_operations',
+            false
         )
             ->join('mvt', 'mvt.id = mvt_commission.id_mvt')
             ->join('prefix AS sender_prefix', 'sender_prefix.value = substr(mvt.num_sender, 1, 3)')
@@ -45,9 +46,10 @@ class CommissionModel extends Model
              SUM(mvt_commission.montant) AS commission_total,
              COUNT(mvt_commission.id) AS nombre_transferts,
              CASE
-                WHEN SUM(mvt.montant) > 0 THEN "a_envoyer"
-                ELSE "rien_a_envoyer"
-             END AS statut_envoi'
+                WHEN SUM(mvt.montant) > 0 THEN \'a_envoyer\'
+                ELSE \'rien_a_envoyer\'
+             END AS statut_envoi',
+            false
         )
             ->join('mvt', 'mvt.id = mvt_commission.id_mvt')
             ->join('prefix AS receiver_prefix', 'receiver_prefix.value = substr(mvt.num_receiver, 1, 3)')
@@ -70,9 +72,10 @@ class CommissionModel extends Model
                     ELSE comission.commission_rate
                  END AS commission_rate,
                  CASE
-                    WHEN op1.id = op2.id THEN "meme_operateur"
-                    ELSE "inter_operateur"
-                 END AS type_commission'
+                    WHEN op1.id = op2.id THEN \'meme_operateur\'
+                    ELSE \'inter_operateur\'
+                 END AS type_commission',
+                false
             )
             ->join('operator AS op1', 'op1.id = comission.id_op1')
             ->join('operator AS op2', 'op2.id = comission.id_op2')

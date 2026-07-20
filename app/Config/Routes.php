@@ -39,4 +39,6 @@ $routes->get('operations/transfert-multiple', 'operations\Operation::transfertMu
 $routes->post('operations/transfert-multiple', 'operations\Operation::transfertMultiple');
 
 $routes->get('rapports', 'rapports\Commission::index');
+$routes->get('rapports/bareme', 'rapports\Commission::bareme');
+$routes->get('rapports/operateurs', 'rapports\Commission::operateurs');
 $routes->get('rapports/comptes', 'rapports\Commission::comptes');

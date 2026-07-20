@@ -2,7 +2,6 @@
 $totalCommission = array_sum(array_column($commissionsParOperateur, 'total_commission'));
 $totalAEnvoyer = array_sum(array_column($montantsAEnvoyer, 'montant_total'));
 $totalCommissionAEnvoyer = array_sum(array_column($montantsAEnvoyer, 'commission_total'));
-$configurationLimitee = array_slice($configurationCommissions, 0, 10);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -48,6 +47,32 @@ $configurationLimitee = array_slice($configurationCommissions, 0, 10);
     </div>
 
     <div class="section-heading">
+      <h2>Accès rapide</h2>
+    </div>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <a href="<?= base_url('rapports/bareme') ?>" class="stat-card d-flex align-items-center gap-3" style="text-decoration:none; color:inherit;">
+          <div class="icon-badge" style="background:#FDF3E3; color:#B9770E; margin-bottom:0;"><i class="bi bi-list-columns-reverse"></i></div>
+          <div class="flex-grow-1">
+            <div class="label" style="margin-bottom:2px;">Configuration</div>
+            <div class="tx-name">Barème des commissions</div>
+          </div>
+          <i class="bi bi-arrow-right" style="color: var(--accent-dark);"></i>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a href="<?= base_url('rapports/operateurs') ?>" class="stat-card d-flex align-items-center gap-3" style="text-decoration:none; color:inherit;">
+          <div class="icon-badge" style="background:#E9EEFB; color:#2A4FD6; margin-bottom:0;"><i class="bi bi-sim"></i></div>
+          <div class="flex-grow-1">
+            <div class="label" style="margin-bottom:2px;">Réseaux</div>
+            <div class="tx-name">Opérateurs &amp; fournisseurs</div>
+          </div>
+          <i class="bi bi-arrow-right" style="color: var(--accent-dark);"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="section-heading">
       <h2>Commissions par opérateur</h2>
     </div>
     <div class="card-ledger">
@@ -85,42 +110,6 @@ $configurationLimitee = array_slice($configurationCommissions, 0, 10);
               </div>
             </div>
             <div class="tx-amount neg">−Ar <?= number_format((float) $ligne['montant_total'], 0, ',', ' ') ?></div>
-          </div>
-        <?php endforeach; ?>
-      <?php endif; ?>
-    </div>
-
-    <div class="section-heading">
-      <h2>Opérateurs fournisseurs</h2>
-    </div>
-    <div class="card-ledger">
-      <?php foreach ($operateursProviders as $operateur) : ?>
-        <div class="tx-row">
-          <div class="tx-icon merchant-pay"><i class="bi bi-sim"></i></div>
-          <div class="tx-info">
-            <div class="tx-name"><?= esc($operateur['operator_name']) ?></div>
-            <div class="tx-date"><?= esc($operateur['provider_name'] ?? 'Aucun fournisseur') ?></div>
-          </div>
-          <div class="tx-amount"><?= esc($operateur['provider_numero'] ?? '-') ?></div>
-        </div>
-      <?php endforeach; ?>
-    </div>
-
-    <div class="section-heading">
-      <h2>Barème commissions</h2>
-    </div>
-    <div class="card-ledger">
-      <?php if (empty($configurationLimitee)) : ?>
-        <div class="tx-row"><div class="tx-info"><div class="tx-name">Aucun barème configuré</div></div></div>
-      <?php else : ?>
-        <?php foreach ($configurationLimitee as $commission) : ?>
-          <div class="tx-row">
-            <div class="tx-icon merchant-refund"><i class="bi bi-percent"></i></div>
-            <div class="tx-info">
-              <div class="tx-name"><?= esc($commission['operator_sender_name']) ?> → <?= esc($commission['operator_receiver_name']) ?></div>
-              <div class="tx-date">Taux configuré</div>
-            </div>
-            <div class="tx-amount pos"><?= number_format((float) $commission['commission_rate'] * 100, 2, ',', ' ') ?> %</div>
           </div>
         <?php endforeach; ?>
       <?php endif; ?>

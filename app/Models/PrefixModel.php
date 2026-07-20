@@ -19,7 +19,6 @@ class PrefixModel extends Model
     public function operatorIdForNumero(string $numero): ?int
     {
         $prefix = $this->where('value', substr($numero, 0, 3))->first();
-
         return $prefix === null ? null : (int) $prefix['operator_id'];
     }
 
