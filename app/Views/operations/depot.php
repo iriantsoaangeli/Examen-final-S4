@@ -1,41 +1,18 @@
 <!DOCTYPE html>
 <html lang="fr">
+<?php $numero = (string) (session()->get('numero') ?? ''); ?>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Reçu de transfert — CASH</title>
-<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="bootstrap/css/icons.css" rel="stylesheet">
-<link href="css/custom.css" rel="stylesheet">
+<link href="<?= base_url('bootstrap/css/bootstrap.css') ?>" rel="stylesheet">
+<link href="<?= base_url('bootstrap/css/icons.css') ?>" rel="stylesheet">
+<link href="<?= base_url('css/custom.css') ?>" rel="stylesheet">
 </head>
 <body class="app-body">
 
 <div class="app-shell">
-
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="brand">
-      <div class="brand-mark">C</div>
-      <div class="brand-name">CASH</div>
-      <div class="brand-sub">Caisse en ligne</div>
-    </div>
-
-    <ul class="nav-ledger">
-      <li><a href="dashboard.html" class="nav-link"><i class="bi bi-wallet2"></i> Solde</a></li>
-      <li><a href="transactions.html" class="nav-link"><i class="bi bi-clock-history"></i> Transactions</a></li>
-      <li><a href="receipt.html" class="nav-link active"><i class="bi bi-receipt"></i> Reçus</a></li>
-      <li><a href="#" class="nav-link"><i class="bi bi-graph-up"></i> Statistiques</a></li>
-      <li><a href="#" class="nav-link"><i class="bi bi-gear"></i> Paramètres</a></li>
-    </ul>
-
-    <div class="sidebar-footer">
-      <div class="avatar">TK</div>
-      <div>
-        <div style="color:var(--paper); font-weight:500;">Tanjiro Kamado</div>
-        <div>Compte personnel</div>
-      </div>
-    </div>
-  </aside>
+  <?= $this->include('partials/sidebar') ?>
 
   <!-- Main -->
   <main class="main">
@@ -49,7 +26,7 @@
         <div class="receipt-top">
           <div class="receipt-status"><i class="bi bi-check-lg"></i></div>
           <div class="receipt-headline">Vous avez envoyé <b>$32.00</b> à</div>
-          <div class="receipt-headline"><b style="font-size:16px;">Nezuko Kamado</b></div>
+          <div class="receipt-headline"><b style="font-size:16px;"><?= esc($numero !== '' ? $numero : 'Destinataire') ?></b></div>
           <div class="receipt-amount font-mono">$32.00</div>
         </div>
 
