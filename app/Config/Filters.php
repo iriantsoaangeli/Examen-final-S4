@@ -25,15 +25,18 @@ class Filters extends BaseFilters
      * or [filter_name => [classname1, classname2, ...]]
      */
     public array $aliases = [
-        'csrf'          => CSRF::class,
-        'toolbar'       => DebugToolbar::class,
-        'honeypot'      => Honeypot::class,
-        'invalidchars'  => InvalidChars::class,
+        'csrf' => CSRF::class,
+        'toolbar' => DebugToolbar::class,
+        'honeypot' => Honeypot::class,
+        'invalidchars' => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
-        'cors'          => Cors::class,
-        'forcehttps'    => ForceHTTPS::class,
-        'pagecache'     => PageCache::class,
-        'performance'   => PerformanceMetrics::class,
+        'cors' => Cors::class,
+        'forcehttps' => ForceHTTPS::class,
+        'pagecache' => PageCache::class,
+        'performance' => PerformanceMetrics::class,
+
+        //Verification de l'authentification
+        'auth' => \App\Filters\AuthFilter::class,
     ];
 
     /**
@@ -72,15 +75,23 @@ class Filters extends BaseFilters
      */
     public array $globals = [
         'before' => [
-            // 'honeypot',
-            // 'csrf',
-            // 'invalidchars',
+            // 'csrf', // optional
+
+            // This forces your filter to run on every single page load
+            'auth' => [
+                'except' => [
+                    'login',       // Exclude the login page so users don't get trapped in a redirect loop
+                    'auth/*',      // Exclude your processing/submission routes (e.g., auth/loginSubmit)
+                    'register',    // Exclude registration page if you have one
+                    'assets/*',    // Exclude your CSS, images, and Javascript folders
+                ]
+            ],
         ],
         'after' => [
-            // 'honeypot',
-            // 'secureheaders',
+            'toolbar',
         ],
     ];
+
 
     /**
      * List of filter aliases that works on a
@@ -107,4 +118,5 @@ class Filters extends BaseFilters
      * @var array<string, array<string, list<string>>>
      */
     public array $filters = [];
+
 }
