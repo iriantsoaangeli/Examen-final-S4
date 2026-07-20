@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\PrefixModel;
 use App\Models\UserModel;
 
 class AuthController extends BaseController
@@ -11,24 +12,44 @@ class AuthController extends BaseController
         return view('/login/login');
     }
 
-    public function authenticate($numero)
+    public function authenticate()
     {
-        $model = new UserModel();
-        if ($this->regex($numero)) {
+        $numero = trim((string) $this->request->getPost('numero'));
 
-            if ($model->exists($numero) || $model->createUser($numero)) {
-                $user = $model->findByNumero($numero);
-                session()->set('numero', $user['numero']);
-                session()->set('isLoggedIn', true);
-            }
-            return redirect()->to('/operations/depot');
-        } else {
-            return redirect()->back()->with('error', 'Nummero invalide');
+        if (! $this->regex($numero)) {
+            return redirect()->back()->withInput()->with('error', 'Numéro invalide. Il doit contenir 10 chiffres et commencer par 0.');
         }
+
+        $model = new UserModel();
+
+        if ($model->exists($numero) || $model->createUser($numero)) {
+            $user = $model->findByNumero($numero);
+            session()->set('numero', $user['numero']);
+            session()->set('isLoggedIn', true);
+
+            return redirect()->to('/operations/depot');
+        }
+
+        return redirect()->back()->withInput()->with('error', "La connexion a échoué. Veuillez réessayer.");
     }
 
-    public function regex($numero)
+    public function logout()
     {
-        return true;
+        session()->destroy();
+
+        return redirect()->to('/login');
+    }
+
+    /**
+     * Valide le numéro : 10 chiffres commençant par 0, et préfixe
+     * (3 premiers chiffres) rattaché à un opérateur connu en base.
+     */
+    public function regex(string $numero): bool
+    {
+        if (! preg_match('/^0[0-9]{9}$/', $numero)) {
+            return false;
+        }
+
+        return (new PrefixModel())->isValidNumero($numero);
     }
 }
