@@ -4,7 +4,8 @@ CREATE TABLE operator (
 );
 
 CREATE TABLE user (
-    numero VARCHAR(10) PRIMARY KEY
+    numero VARCHAR(10) PRIMARY KEY,
+    solde DECIMAL(16, 2) NOT NULL
 );
 
 CREATE TABLE prefix (
