@@ -7,9 +7,6 @@ operateurs:
 prefixe:
 id, pre, id_op(fk)
 
-frais:
--id, id_tranche, montant
-
 tranche:
 -id, inf,sup,id_type
 
