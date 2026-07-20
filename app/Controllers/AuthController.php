@@ -27,7 +27,7 @@ class AuthController extends BaseController
             session()->set('numero', $user['numero']);
             session()->set('isLoggedIn', true);
 
-            return redirect()->to('/operations/depot');
+            return redirect()->to('/dashboard');
         }
 
         return redirect()->back()->withInput()->with('error', "La connexion a échoué. Veuillez réessayer.");
