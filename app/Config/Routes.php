@@ -10,6 +10,15 @@ use App\Controllers\AuthController;
 $routes->get('login', 'AuthController::login');
 $routes->post('auth', 'AuthController::authenticate');
 $routes->get('logout', 'AuthController::logout');
+$routes->get('/', 'AuthController::login');
+
+$routes->get('dashboard', 'Home::dashboard');
+$routes->get('dashboard.html', 'Home::dashboard');
+$routes->get('transactions', 'Home::transactions');
+$routes->get('transactions.html', 'Home::transactions');
+$routes->get('recu', 'operations\Operation::depot');
+$routes->get('receipt', 'operations\Operation::depot');
+$routes->get('receipt.html', 'operations\Operation::depot');
 
 $routes->get('api/prefix', 'APIController::getPrefix');
 
