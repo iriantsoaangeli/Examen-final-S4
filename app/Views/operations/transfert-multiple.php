@@ -28,7 +28,7 @@ $numero = (string) (session()->get('numero') ?? '');
 		<?php endif; ?>
 
 		<div class="card-ledger p-4">
-			<form action="<?= base_url('operations/transfert_multiple') ?>" method="post" class="row g-3" id="transferMultipleForm">
+			<form action="<?= base_url('operations/transfert-multiple') ?>" method="post" class="row g-3" id="transferMultipleForm">
 				<div class="col-12 col-md-6">
 					<label class="form-label">Votre numéro</label>
 					<input type="text" class="form-control" name="numero_sender" value="<?= esc($numero) ?>" readonly>
@@ -37,7 +37,7 @@ $numero = (string) (session()->get('numero') ?? '');
 				<div class="col-12 col-md-6">
 					<label class="form-label">Ajouter un destinataire</label>
 					<div class="input-group">
-						<input type="text" class="form-control" id="numero_input" placeholder="Ex: 0341234567 ou 0691234567">
+						<input type="text" class="form-control" id="numero_input"  maxlength="10" placeholder="Ex: 0341234567 ou 0691234567">
 						<button class="btn btn-outline-success" type="button" id="btn_add_numero">
 							<i class="bi bi-plus-lg"></i>
 						</button>
