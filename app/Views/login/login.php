@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Connexion — CASH</title>
-<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="bootstrap/css/icons.css" rel="stylesheet">
-<link href="/css/custom.css" rel="stylesheet">
+<link href="<?= base_url('bootstrap/css/bootstrap.css') ?>" rel="stylesheet">
+<link href="<?= base_url('bootstrap/css/icons.css') ?>" rel="stylesheet">
+<link href="<?= base_url('css/custom.css') ?>" rel="stylesheet">
 <style>
   /* Zoom automatique de la page d'accueil dès son ouverture */
   html{ zoom: 140%; }
@@ -64,7 +64,7 @@
   </div>
 </div>
 
-<script src="/script/regex.js"></script>
+<script src="<?= base_url('script/regex.js') ?>"></script>
 <script>
   const numeroInput = document.getElementById('numero');
   const hint = document.getElementById('numeroHint');
