@@ -1,0 +1,612 @@
+/* =========================================================
+   ENCAISSE — design system
+   Un cash app pensé comme un vrai registre de caisse :
+   papier, encre, tampons et tickets perforés.
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+  /* Palette */
+  --ink:        #10231A;   /* encre verte quasi noire */
+  --ink-soft:   #33473C;
+  --paper:      #F1F3EC;   /* papier registre, blanc cassé vert-gris */
+  --paper-alt:  #E7EBDF;
+  --paper-line: #D8DECB;
+  --card:       #FFFFFF;
+  --accent:     #1E8E5A;   /* vert caisse — actions, entrées d'argent */
+  --accent-dark:#146645;
+  --gold:       #B8912B;   /* tampon doré — signature, focus, alertes douces */
+  --pos:        #1E8E5A;
+  --neg:        #B4442E;
+  --muted:      #5E6A5F;
+
+  --radius-card: 14px;
+  --radius-sm: 8px;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'IBM Plex Sans', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+*{ box-sizing: border-box; }
+
+body{
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  min-height: 100vh;
+}
+
+/* subtle ledger-paper texture: faint horizontal rules */
+body.app-body{
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 34px,
+    rgba(16,35,26,0.035) 35px
+  );
+}
+
+a{ color: inherit; text-decoration: none; }
+
+.font-display{ font-family: var(--font-display); }
+.font-mono{ font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* =========================================================
+   LAYOUT — sidebar "onglets de registre"
+   ========================================================= */
+.app-shell{
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar{
+  width: 260px;
+  flex-shrink: 0;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 28px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar .brand{
+  padding: 0 24px 24px;
+  border-bottom: 1px solid rgba(241,243,236,0.12);
+  margin-bottom: 18px;
+}
+
+.sidebar .brand-mark{
+  width: 38px; height: 38px;
+  border-radius: 8px;
+  background: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.sidebar .brand-name{
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.sidebar .brand-sub{
+  font-size: 12px;
+  color: rgba(241,243,236,0.55);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.nav-ledger{
+  list-style: none;
+  padding: 0 12px;
+  margin: 0;
+  flex: 1;
+}
+
+.nav-ledger .nav-link{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 8px;
+  color: rgba(241,243,236,0.72);
+  font-size: 14.5px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  border-left: 3px solid transparent;
+  transition: background .15s ease, color .15s ease;
+}
+
+.nav-ledger .nav-link i{ font-size: 17px; width: 20px; text-align: center; }
+
+.nav-ledger .nav-link:hover{
+  background: rgba(241,243,236,0.06);
+  color: var(--paper);
+}
+
+.nav-ledger .nav-link.active{
+  background: rgba(30,142,90,0.16);
+  color: #fff;
+  border-left: 3px solid var(--accent);
+}
+
+.sidebar-footer{
+  padding: 16px 24px 4px;
+  border-top: 1px solid rgba(241,243,236,0.12);
+  font-size: 12.5px;
+  color: rgba(241,243,236,0.55);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar-footer .avatar{
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--ink);
+  display:flex; align-items:center; justify-content:center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.main{
+  flex: 1;
+  padding: 36px 44px;
+  max-width: 1180px;
+}
+
+.page-eyebrow{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.page-title{
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 28px;
+}
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+.card-ledger{
+  background: var(--card);
+  border: 1px solid var(--paper-line);
+  border-radius: var(--radius-card);
+  box-shadow: 0 1px 2px rgba(16,35,26,0.04);
+}
+
+/* Solde — carte principale */
+.balance-card{
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: var(--radius-card);
+  padding: 32px 34px;
+  position: relative;
+  overflow: hidden;
+}
+
+.balance-card::after{
+  content: "";
+  position: absolute;
+  right: -40px; top: -60px;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(30,142,90,0.35), transparent 70%);
+}
+
+.balance-label{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(241,243,236,0.6);
+  margin-bottom: 10px;
+}
+
+.balance-amount{
+  font-family: var(--font-display);
+  font-size: 52px;
+  font-weight: 600;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.balance-amount .cents{
+  font-size: 26px;
+  color: rgba(241,243,236,0.7);
+}
+
+.balance-sub{
+  font-size: 13px;
+  color: rgba(241,243,236,0.55);
+  font-family: var(--font-mono);
+}
+
+.balance-actions{
+  display: flex;
+  gap: 10px;
+  margin-top: 26px;
+  position: relative;
+  z-index: 1;
+}
+
+.btn-ledger{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 500;
+  border: 1px solid rgba(241,243,236,0.2);
+  background: rgba(241,243,236,0.06);
+  color: var(--paper);
+  transition: background .15s ease;
+}
+.btn-ledger:hover{ background: rgba(241,243,236,0.14); color:#fff; }
+.btn-ledger.primary{
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.btn-ledger.primary:hover{ background: var(--accent-dark); }
+
+/* small stat cards */
+.stat-card{
+  background: var(--card);
+  border: 1px solid var(--paper-line);
+  border-radius: var(--radius-card);
+  padding: 20px 22px;
+}
+.stat-card .icon-badge{
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom: 14px;
+  font-size: 16px;
+}
+.stat-card .label{
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.stat-card .value{
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* =========================================================
+   TRANSACTIONS
+   ========================================================= */
+.section-heading{
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 34px 0 14px;
+}
+.section-heading h2{
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 600;
+  margin: 0;
+}
+.section-heading .see-all{
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent-dark);
+}
+
+.search-bar{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--card);
+  border: 1px solid var(--paper-line);
+  border-radius: 10px;
+  padding: 10px 16px;
+  color: var(--muted);
+}
+.search-bar input{
+  border: none;
+  background: transparent;
+  outline: none;
+  flex: 1;
+  font-size: 14px;
+  font-family: var(--font-body);
+  color: var(--ink);
+}
+.filter-btn{
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--paper-line);
+  background: var(--card);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink-soft);
+}
+
+.tx-group-label{
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  margin: 22px 4px 10px;
+}
+
+.tx-row{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--paper-alt);
+}
+.tx-row:last-child{ border-bottom: none; }
+
+.tx-icon{
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.tx-icon.merchant-vimeo{ background:#E7F2FB; color:#1AB7EA; }
+.tx-icon.merchant-video{ background:#FDE8E8; color:#D6362B; }
+.tx-icon.merchant-pay{ background:#E9EEFB; color:#2A4FD6; }
+.tx-icon.merchant-sale{ background:#E7F5EC; color:var(--accent-dark); }
+.tx-icon.merchant-refund{ background:#FBEFE0; color:#C97A1F; }
+.tx-icon.merchant-transfer{ background:#E9EEFB; color:#2A4FD6; }
+
+.tx-info{ flex: 1; min-width: 0; }
+.tx-name{ font-size: 14.5px; font-weight: 500; color: var(--ink); }
+.tx-date{ font-size: 12.5px; color: var(--muted); font-family: var(--font-mono); }
+
+.tx-amount{
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.tx-amount.pos{ color: var(--pos); }
+.tx-amount.neg{ color: var(--neg); }
+
+/* =========================================================
+   RECEIPT — ticket perforé (élément signature)
+   ========================================================= */
+.receipt-wrap{
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.receipt{
+  width: 420px;
+  background: var(--card);
+  border-radius: 4px;
+  box-shadow: 0 12px 32px rgba(16,35,26,0.12);
+  position: relative;
+  padding-bottom: 6px;
+}
+
+.receipt-top{
+  padding: 34px 34px 22px;
+  text-align: center;
+  border-bottom: 1px dashed var(--paper-line);
+}
+
+.receipt-status{
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: #E7F5EC;
+  color: var(--accent-dark);
+  font-size: 26px;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.receipt-headline{
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.receipt-headline b{ color: var(--ink); font-weight: 600; }
+
+.receipt-amount{
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.receipt-body{
+  padding: 22px 34px;
+}
+.receipt-line{
+  display: flex;
+  justify-content: space-between;
+  padding: 9px 0;
+  font-size: 14px;
+}
+.receipt-line .k{ color: var(--muted); }
+.receipt-line .v{ font-family: var(--font-mono); font-weight: 500; color: var(--ink); }
+
+.receipt-stamp{
+  position: absolute;
+  top: 26px; right: 30px;
+  border: 1.5px solid var(--gold);
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 4px 9px;
+  border-radius: 4px;
+  transform: rotate(6deg);
+  opacity: 0.85;
+}
+
+/* perforated edge */
+.receipt-perf{
+  height: 20px;
+  position: relative;
+  background-image: radial-gradient(circle, var(--paper) 5.5px, transparent 5.6px);
+  background-size: 20px 20px;
+  background-position: -10px center;
+  background-repeat: repeat-x;
+}
+.receipt-perf::before, .receipt-perf::after{
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 20px;
+  background: var(--paper);
+  border-radius: 50%;
+}
+.receipt-perf::before{ left: -10px; }
+.receipt-perf::after{ right: -10px; }
+
+.receipt-actions{
+  padding: 20px 34px 30px;
+  display: flex;
+  gap: 10px;
+}
+
+/* =========================================================
+   LOGIN
+   ========================================================= */
+.login-shell{
+  min-height: 100vh;
+  display: flex;
+}
+.login-visual{
+  flex: 1.1;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+.login-visual::after{
+  content: "";
+  position: absolute;
+  left: -80px; bottom: -100px;
+  width: 340px; height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(184,145,43,0.25), transparent 70%);
+}
+.login-visual .quote{
+  font-family: var(--font-display);
+  font-size: 30px;
+  line-height: 1.35;
+  max-width: 420px;
+  position: relative;
+  z-index: 1;
+}
+.login-visual .quote-attr{
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: rgba(241,243,236,0.55);
+  margin-top: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.login-form-side{
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+.login-box{ width: 100%; max-width: 380px; }
+
+.login-box .brand-row{
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 34px;
+}
+
+.form-ledger label{
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 6px;
+  display: block;
+}
+.form-ledger .form-control{
+  border: 1px solid var(--paper-line);
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-size: 14.5px;
+  background: var(--paper);
+}
+.form-ledger .form-control:focus{
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(184,145,43,0.18);
+  background: #fff;
+}
+
+.btn-full{
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14.5px;
+  border: none;
+  transition: background .15s ease;
+}
+.btn-full:hover{ background: var(--accent-dark); color:#fff; }
+
+.divider-or{
+  display: flex; align-items: center; gap: 12px;
+  margin: 22px 0;
+  color: var(--muted);
+  font-size: 12.5px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+.divider-or::before, .divider-or::after{
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--paper-line);
+}
+
+.btn-outline-ledger{
+  width: 100%;
+  padding: 11px;
+  border-radius: 8px;
+  border: 1px solid var(--paper-line);
+  background: #fff;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--ink);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.btn-outline-ledger:hover{ background: var(--paper-alt); }
