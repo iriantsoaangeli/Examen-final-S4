@@ -83,7 +83,10 @@ class Filters extends BaseFilters
                     'login',       // Exclude the login page so users don't get trapped in a redirect loop
                     'auth/*',      // Exclude your processing/submission routes (e.g., auth/loginSubmit)
                     'register',    // Exclude registration page if you have one
-                    'assets/*',    // Exclude your CSS, images, and Javascript folders
+                    'css/*',    // Exclude your CSS, images, and Javascript folders
+                    'js/*',    // Exclude your CSS, images, and Javascript folders
+                    'script/*',    // Exclude your CSS, images, and Javascript folders
+                    'bootstrap/*',    // Exclude your CSS, images, and Javascript folders
                 ]
             ],
         ],
