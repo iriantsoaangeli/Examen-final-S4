@@ -116,4 +116,8 @@ mvt_details :
         splitter lors d'envoi multiple  
   - [ ] Creer la page Situation gain via differents frais           (Randy)
     - [ ] Ajouter situation de montant pour chaque operateur        (Randy)
+    - [ ] Creer le controller app/Controllers/rapports/Rapport.php  (Randy)
+      - [ ] Fonction: 
+        - [ ] - gainsParOperateurs(gains pour chaques operateurs)
+        - [ ] - montantsAEnvoyer(du aux autres operateurs)
 ---
