@@ -109,16 +109,27 @@ mvt_details :
     - [x] Ajouter d'autres operateur                                (Angeli)
       - [x] Ajouter Airtel,Tout les numeros yas                     (Angeli)
       - [ ] Ajout de notre propre operteur
-  - [ ] Creer le filtre OPFilter.php
+  - [ ] Creer le filtre OPFilter.php                                (Angeli)
     - [ ] Empecher l'acces a la deuxieme page d'envoi 
     - [ ] Creer une copie de la page envoi, envoi                   (Angeli)
         multiple disponible                 
   - [ ] Modifier Controllers\operations\Operation pour              (Angeli)
         splitter lors d'envoi multiple  
-  - [ ] Creer la page Situation gain via differents frais           (Randy)
-    - [ ] Ajouter situation de montant pour chaque operateur        (Randy)
-    - [ ] Creer le controller app/Controllers/rapports/Rapport.php  (Randy)
-      - [ ] Fonction: 
-        - [ ] - gainsParOperateurs(gains pour chaques operateurs)   (Randy)
-        - [ ] - montantsAEnvoyer(du aux autres operateurs)          (Randy)
+  - [x] Creer la page Situation gain via differents frais           (Randy)
+    - [x] Ajouter situation de montant pour chaque operateur        (Randy)
+    - [x] Renommer Rapport en Commission                            (Randy)
+    - [x] Creer controller app/Controllers/rapports/Commission.php  (Randy)
+    - [x] Renommer RapportModel en CommissionModel                  (Randy)
+    - [x] Renommer la vue rapport en commission                     (Randy)
+    - [x] Garder le menu sidebar avec le nom Rapports               (Randy)
+    - [x] Brancher les routes rapports vers Commission              (Randy)
+      - [x] Fonction: 
+        - [x] - commissionsParOperateurs                            (Randy)
+        - [x] - montantsAEnvoyer(du aux autres operateurs)          (Randy)
+        - [x] - operateurs avec compte fournisseur is_provider      (Randy)
+        - [x] - configuration des taux de commission                (Randy)
+    - [x] Adapter les requetes avec CASE                            (Randy)
+      - [x] type commission interne / inter-operateur               (Randy)
+      - [x] statut montant a envoyer                                (Randy)
+      - [x] detection fournisseur par operateur                     (Randy)
 ---
