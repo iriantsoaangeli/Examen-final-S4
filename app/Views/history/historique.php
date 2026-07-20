@@ -32,69 +32,37 @@
       </div>
     </div>
 
-    <!-- Aujourd'hui -->
-    <div class="tx-group-label">Aujourd'hui</div>
-    <div class="card-ledger">
-      <div class="tx-row">
-        <div class="tx-icon merchant-vimeo"><i class="bi bi-vimeo"></i></div>
-        <div class="tx-info">
-          <div class="tx-name">Abonnement Vimeo</div>
-          <div class="tx-date">20 mai · 13:28</div>
+    <?php if (empty($groupes)) : ?>
+      <div class="card-ledger">
+        <div class="tx-row">
+          <div class="tx-info">
+            <div class="tx-name">Aucune transaction pour le moment</div>
+          </div>
         </div>
-        <div class="tx-amount neg">−$20.00</div>
       </div>
-      <div class="tx-row">
-        <div class="tx-icon merchant-video"><i class="bi bi-youtube"></i></div>
-        <div class="tx-info">
-          <div class="tx-name">Paiements créateur</div>
-          <div class="tx-date">20 mai · 10:32</div>
+    <?php else : ?>
+      <?php foreach ($groupes as $groupe) : ?>
+        <div class="tx-group-label"><?= esc($groupe['label']) ?></div>
+        <div class="card-ledger">
+          <?php foreach ($groupe['items'] as $item) : ?>
+            <div class="tx-row">
+              <div class="tx-icon <?= esc($item['merchantClass'], 'attr') ?>"><i class="bi <?= esc($item['icon'], 'attr') ?>"></i></div>
+              <div class="tx-info">
+                <div class="tx-name"><?= esc($item['label']) ?> · <?= esc($item['counterparty']) ?></div>
+                <div class="tx-date"><?= esc($item['heure']) ?></div>
+              </div>
+              <div class="tx-amount <?= $item['isPositive'] ? 'pos' : 'neg' ?>">
+                <?= $item['isPositive'] ? '+' : '−' ?>$<?= number_format(abs($item['amount']), 2) ?>
+              </div>
+            </div>
+          <?php endforeach; ?>
         </div>
-        <div class="tx-amount pos">+$12.99</div>
-      </div>
-      <div class="tx-row">
-        <div class="tx-icon merchant-pay"><i class="bi bi-paypal"></i></div>
-        <div class="tx-info">
-          <div class="tx-name">Paiement d'achat</div>
-          <div class="tx-date">20 mai · 09:24</div>
-        </div>
-        <div class="tx-amount neg">−$32.00</div>
-      </div>
-      <div class="tx-row">
-        <div class="tx-icon merchant-sale"><i class="bi bi-cash-coin"></i></div>
-        <div class="tx-info">
-          <div class="tx-name">Revenus de vente</div>
-          <div class="tx-date">20 mai · 09:01</div>
-        </div>
-        <div class="tx-amount pos">+$23.99</div>
-      </div>
-    </div>
+      <?php endforeach; ?>
 
-    <!-- 19 mai -->
-    <div class="tx-group-label">19 mai 2025</div>
-    <div class="card-ledger">
-      <div class="tx-row">
-        <div class="tx-icon merchant-refund"><i class="bi bi-arrow-counterclockwise"></i></div>
-        <div class="tx-info">
-          <div class="tx-name">Remboursement reçu</div>
-          <div class="tx-date">19 mai · 13:28</div>
-        </div>
-        <div class="tx-amount pos">+$45.50</div>
+      <div class="d-flex justify-content-center mt-4">
+        <?= $pager->links('default', 'ledger') ?>
       </div>
-      <div class="tx-row">
-        <div class="tx-icon merchant-transfer"><i class="bi bi-paypal"></i></div>
-        <div class="tx-info">
-          <div class="tx-name">Virement entrant</div>
-          <div class="tx-date">19 mai · 09:24</div>
-        </div>
-        <div class="tx-amount pos">+$89.75</div>
-      </div>
-    </div>
-
-    <div class="d-flex justify-content-center mt-4">
-      <button class="btn-ledger" style="background:var(--card); color:var(--ink); border-color:var(--paper-line);">
-        Charger plus <i class="bi bi-chevron-down"></i>
-      </button>
-    </div>
+    <?php endif; ?>
 
   </main>
 </div>
