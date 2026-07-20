@@ -41,15 +41,15 @@ mvt_details :
 - [x] Création du db Sqlite                                         (Angeli)
 - [x] Création de la base.sql                                       (Angeli)
 - [x] Création des tables de la base                                (Angeli)
-- [x] Correction logique table `user`
-  - [x] garder `numero` comme clé primaire
+- [x] Correction logique table `user`                               (Angeli)
+  - [x] `numero` comme clé primaire
   - [x] ajouter `nom`, `solde`, `is_provider`
   - [x] créer le fournisseur invisible
-- [x] Correction logique table `mvt`
+- [x] Correction logique table `mvt`                                (Randy)
   - [x] utiliser `num_sender` et `num_receiver`
   - [x] lier les mouvements aux numéros clients
   - [x] stocker montant, frais, type, description et date
-- [x] Ajout de la table `mvt_details`
+- [x] Ajout de la table `mvt_details`                               (Randy)
   - [x] lier un mouvement à sa tranche de frais
 - [x] Création des models opérations                                (Randy)
   - [x] `UserModel`                                                 (Randy)
@@ -110,8 +110,10 @@ mvt_details :
       - [ ] Ajouter Airtel,Tout les numeros yas                     (Angeli)
   - [ ] Creer le filtre OPFilter.php
     - [ ] Empecher l'acces a la deuxieme page d'envoi 
-    - [ ] Creer une copie de la page envoi , envoi multiple disponible                   (Angeli)
-  - [ ] Modifier Controllers\operations\Operation pour splitter lors d'envoi multiple  (Angeli)
+    - [ ] Creer une copie de la page envoi, envoi                   (Angeli)
+        multiple disponible                 
+  - [ ] Modifier Controllers\operations\Operation pour              (Angeli)
+        splitter lors d'envoi multiple  
   - [ ] Creer la page Situation gain via differents frais           (Randy)
     - [ ] Ajouter situation de montant pour chaque operateur        (Randy)
 ---
