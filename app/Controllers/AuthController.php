@@ -26,6 +26,8 @@ class AuthController extends BaseController
             $user = $model->findByNumero($numero);
             session()->set('numero', $user['numero']);
             session()->set('isLoggedIn', true);
+            session()->set('isOP', (int) $user['is_provider'] === 1);
+            session()->set('nom', $user['nom'] ?? '');
 
             return redirect()->to('/dashboard');
         }

@@ -41,15 +41,15 @@ mvt_details :
 - [x] Création du db Sqlite                                         (Angeli)
 - [x] Création de la base.sql                                       (Angeli)
 - [x] Création des tables de la base                                (Angeli)
-- [x] Correction logique table `user`
-  - [x] garder `numero` comme clé primaire
+- [x] Correction logique table `user`                               (Angeli)
+  - [x] `numero` comme clé primaire
   - [x] ajouter `nom`, `solde`, `is_provider`
   - [x] créer le fournisseur invisible
-- [x] Correction logique table `mvt`
+- [x] Correction logique table `mvt`                                (Randy)
   - [x] utiliser `num_sender` et `num_receiver`
   - [x] lier les mouvements aux numéros clients
   - [x] stocker montant, frais, type, description et date
-- [x] Ajout de la table `mvt_details`
+- [x] Ajout de la table `mvt_details`                               (Randy)
   - [x] lier un mouvement à sa tranche de frais
 - [x] Création des models opérations                                (Randy)
   - [x] `UserModel`                                                 (Randy)
@@ -105,5 +105,32 @@ mvt_details :
     - [x] liste des clients
     - [x] numéro, nom et solde
     - [x] masquer le fournisseur invisible
-
+  - [x] Mise a jour base de donnees                                 
+    - [x] Ajouter d'autres operateur                                (Angeli)
+      - [x] Ajouter Airtel,Tout les numeros yas                     (Angeli)
+      - [x] Ajout de notre propre operteur                          (Angeli)
+  - [x] Creer le filtre OPFilter.php                                (Angeli)
+    - [x]  Empecher l'acces a la deuxieme page d'envoi              (Angeli)
+    - [x] Creer une copie de la page envoi, envoi                   (Angeli)
+        multiple disponible                 
+  - [x] Modifier Controllers\operations\Operation pour              (Angeli)
+        splitter lors d'envoi multiple  
+  - [ ] modifier log in pour inclure si l'user est un operateur     (Angeli)
+  - [x] Creer la page Situation gain via differents frais           (Randy)
+    - [x] Ajouter situation de montant pour chaque operateur        (Randy)
+    - [x] Renommer Rapport en Commission                            (Randy)
+    - [x] Creer controller app/Controllers/rapports/Commission.php  (Randy)
+    - [x] Renommer RapportModel en CommissionModel                  (Randy)
+    - [x] Renommer la vue rapport en commission                     (Randy)
+    - [x] Garder le menu sidebar avec le nom Rapports               (Randy)
+    - [x] Brancher les routes rapports vers Commission              (Randy)
+      - [x] Fonction: 
+        - [x] - commissionsParOperateurs                            (Randy)
+        - [x] - montantsAEnvoyer(du aux autres operateurs)          (Randy)
+        - [x] - operateurs avec compte fournisseur is_provider      (Randy)
+        - [x] - configuration des taux de commission                (Randy)
+    - [x] Adapter les requetes avec CASE                            (Randy)
+      - [x] type commission interne / inter-operateur               (Randy)
+      - [x] statut montant a envoyer                                (Randy)
+      - [x] detection fournisseur par operateur                     (Randy)
 ---

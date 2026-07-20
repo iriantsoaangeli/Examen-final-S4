@@ -79,6 +79,14 @@ if ($receipt !== null) {
                 <?= (float) $receipt['frais'] > 0 ? number_format((float) $receipt['frais'], 2) . 'Ar' : 'Gratuit' ?>
               </span>
             </div>
+            <?php if (!empty($receipt['commission']) && (float) $receipt['commission'] > 0) : ?>
+              <div class="receipt-line">
+                <span class="k">Commission</span>
+                <span class="v" style="color:var(--accent-dark);">
+                  <?= number_format((float) $receipt['commission'], 2) ?>Ar
+                </span>
+              </div>
+            <?php endif; ?>
             <div class="receipt-line">
               <span class="k">Description</span>
               <span class="v"><?= esc($receipt['description'] !== '' ? $receipt['description'] : '—') ?></span>
