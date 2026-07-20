@@ -9,17 +9,44 @@ use App\Models\PrefixModel;
 use App\Models\TrancheModel;
 use App\Models\TypeMvtModel;
 use App\Models\UserModel;
+use RuntimeException;
 
 class Operation extends BaseController
 {
-    private const PROVIDER_NUMERO = '0340000000';
+    // Déclaration des propriétés de la classe
+    private UserModel $userModel;
+    private MvtModel $mvtModel;
+    private PrefixModel $prefixModel;
+    private TrancheModel $trancheModel;
+    private TypeMvtModel $typeMvtModel;
+    private MvtDetailsModel $mvtDetailsModel;
+    
+    private ?string $providerNumero = null;
+
+    // Initialisation des modèles dans le constructeur
+    public function __construct()
+    {
+        $this->userModel = new UserModel();
+        $this->mvtModel = new MvtModel();
+        $this->prefixModel = new PrefixModel();
+        $this->trancheModel = new TrancheModel();
+        $this->typeMvtModel = new TypeMvtModel();
+        $this->mvtDetailsModel = new MvtDetailsModel();
+    }
+
+    private function getProviderNumero(): string
+    {
+        if ($this->providerNumero === null) {
+            $this->providerNumero = $this->userModel->getProviderNumero();
+        }
+        return $this->providerNumero;
+    }
 
     public function depot()
     {
         if (strtolower($this->request->getMethod()) !== 'post') {
             return view('operations/depot');
         }
-
         return $this->executerOperation('depot');
     }
 
@@ -28,7 +55,6 @@ class Operation extends BaseController
         if (strtolower($this->request->getMethod()) !== 'post') {
             return view('operations/retrait');
         }
-
         return $this->executerOperation('retrait');
     }
 
@@ -37,110 +63,46 @@ class Operation extends BaseController
         if (strtolower($this->request->getMethod()) !== 'post') {
             return view('operations/transfert');
         }
-
         return $this->executerOperation('transfert');
     }
 
     public function historique(string $numero)
     {
-        $mouvements = (new MvtModel())->getMouvementsByUser($numero);
-
-        return $this->response->setJSON($mouvements);
+        return $this->response->setJSON($this->mvtModel->getMouvementsByUser($numero));
     }
 
     public function gains()
     {
-        return $this->response->setJSON((new MvtModel())->getGainFrais());
+        return $this->response->setJSON($this->mvtModel->getGainFrais());
     }
 
     public function comptes()
     {
-        return $this->response->setJSON((new UserModel())->getClients());
+        return $this->response->setJSON($this->userModel->getClients());
     }
 
     private function executerOperation(string $type)
     {
-        $montant = (float) $this->request->getPost('montant');
-        $description = (string) ($this->request->getPost('description') ?? '');
+        try {
+            $montant = (float) $this->request->getPost('montant');
+            if ($montant <= 0) {
+                throw new RuntimeException('Le montant doit être supérieur à 0.');
+            }
 
-        if ($montant <= 0) {
-            return $this->erreur('Le montant doit être supérieur à 0.');
-        }
+            $typeId = $this->resoudreTypeId($type);
+            $tranche = $this->resoudreTranche($typeId, $montant);
+            [$sender, $receiver] = $this->resoudreParticipants($type);
+            
+            $debit = $type === 'depot' ? 0 : $montant + (float) $tranche['frais'];
 
-        $userModel = new UserModel();
-        $typeModel = new TypeMvtModel();
-        $trancheModel = new TrancheModel();
-        $mvtModel = new MvtModel();
-        $mvtDetailsModel = new MvtDetailsModel();
-        $db = db_connect();
+            if ($debit > 0 && (float) $sender['solde'] < $debit) {
+                throw new RuntimeException('Solde insuffisant.');
+            }
 
-        $typeId = $typeModel->getIdByLibelle($type);
-        if ($typeId === null) {
-            return $this->erreur("Le type d'opération {$type} n'existe pas.");
-        }
-
-        $tranche = $trancheModel->findByTypeAndMontant($typeId, $montant);
-        if ($tranche === null) {
-            return $this->erreur('Aucune tranche de frais ne correspond à ce montant.');
-        }
-
-        $frais = (float) $tranche['frais'];
-        $sender = null;
-        $receiver = null;
-
-        if ($type === 'depot') {
-            $receiver = $this->getClientByNumero((string) $this->request->getPost('numero_receiver'), $userModel);
-            $sender = $userModel->find(self::PROVIDER_NUMERO);
-        } elseif ($type === 'retrait') {
-            $sender = $this->getClientByNumero((string) $this->request->getPost('numero_sender'), $userModel);
-            $receiver = $userModel->find(self::PROVIDER_NUMERO);
-        } else {
-            $sender = $this->getClientByNumero((string) $this->request->getPost('numero_sender'), $userModel);
-            $receiver = $this->getClientByNumero((string) $this->request->getPost('numero_receiver'), $userModel);
-        }
-
-        if ($sender === null || $receiver === null) {
-            return $this->erreur('Compte introuvable pour cette opération.');
-        }
-
-        if ($sender['numero'] === $receiver['numero']) {
-            return $this->erreur('Le compte source et le compte destinataire doivent être différents.');
-        }
-
-        $debit = $type === 'depot' ? 0 : $montant + $frais;
-        if ($debit > 0 && (float) $sender['solde'] < $debit) {
-            return $this->erreur('Solde insuffisant.');
-        }
-
-        $db->transStart();
-
-        if ($debit > 0) {
-            $this->incrementerSolde($sender['numero'], -$debit);
-        }
-
-        if ($type !== 'retrait') {
-            $this->incrementerSolde($receiver['numero'], $montant);
-        }
-
-        $mvtId = $mvtModel->insert([
-            'montant' => $montant,
-            'frais' => $frais,
-            'id_type' => $typeId,
-            'num_sender' => $sender['numero'],
-            'num_receiver' => $receiver['numero'],
-            'description' => $description,
-            'instant' => date('Y-m-d H:i:s'),
-        ], true);
-
-        $mvtDetailsModel->insert([
-            'id_mvt' => $mvtId,
-            'id_tranche' => (int) $tranche['id'],
-        ]);
-
-        $db->transComplete();
-
-        if (! $db->transStatus()) {
-            return $this->erreur("L'opération n'a pas pu être enregistrée.", 500);
+            $mvtId = $this->enregistrerMouvement($type, $typeId, $tranche, $sender, $receiver, $montant, $debit);
+            
+        } catch (RuntimeException $e) {
+            return $this->erreur($e->getMessage());
         }
 
         return $this->response->setJSON([
@@ -148,19 +110,107 @@ class Operation extends BaseController
             'id_mvt' => $mvtId,
             'type' => $type,
             'montant' => $montant,
-            'frais' => $frais,
+            'frais' => (float) $tranche['frais'],
         ]);
+    }
+
+    private function resoudreTypeId(string $type): int
+    {
+        $typeId = $this->typeMvtModel->getIdByLibelle($type);
+        if ($typeId === null) {
+            throw new RuntimeException("Le type d'opération {$type} n'existe pas.");
+        }
+        return $typeId;
+    }
+
+    private function resoudreTranche(int $typeId, float $montant): array
+    {
+        $tranche = $this->trancheModel->findByTypeAndMontant($typeId, $montant);
+        if ($tranche === null) {
+            throw new RuntimeException('Aucune tranche de frais ne correspond à ce montant.');
+        }
+        return $tranche;
+    }
+
+    private function resoudreParticipants(string $type): array
+    {
+        // Utilisation du numéro dynamique du provider
+        $provider = fn () => $this->userModel->find($this->getProviderNumero());
+        
+        // Correction de la syntaxe d'appel de la méthode privée
+        $client = fn (string $champ) => $this->getClientByNumero(
+            (string) $this->request->getPost($champ),
+            $this->userModel
+        );
+
+        $sender = $type === 'depot' ? $provider() : $client('numero_sender');
+        $receiver = $type === 'retrait' ? $provider() : $client('numero_receiver');
+
+        if ($sender === null || $receiver === null) {
+            throw new RuntimeException('Compte introuvable pour cette opération.');
+        }
+
+        if ($sender['numero'] === $receiver['numero']) {
+            throw new RuntimeException('Le compte source et le compte destinataire doivent être différents.');
+        }
+
+        return [$sender, $receiver];
+    }
+
+    private function enregistrerMouvement(
+        string $type,
+        int $typeId,
+        array $tranche,
+        array $sender,
+        array $receiver,
+        float $montant,
+        float $debit
+    ): int {
+        // Centralisation de la connexion via le modèle existant pour éviter les conflits SQLite
+        $db = $this->mvtModel->db; 
+        $db->transStart();
+
+        if ($debit > 0) {
+            $this->incrementerSolde($db, $sender['numero'], -$debit);
+        }
+
+        if ($type !== 'retrait') {
+            $this->incrementerSolde($db, $receiver['numero'], $montant);
+        }
+
+        $mvtId = $this->mvtModel->insert([
+            'montant' => $montant,
+            'frais' => (float) $tranche['frais'],
+            'id_type' => $typeId,
+            'num_sender' => $sender['numero'],
+            'num_receiver' => $receiver['numero'],
+            'description' => (string) ($this->request->getPost('description') ?? ''),
+            'instant' => date('Y-m-d H:i:s'),
+        ], true);
+
+        $this->mvtDetailsModel->insert([
+            'id_mvt' => $mvtId,
+            'id_tranche' => (int) $tranche['id'],
+        ]);
+
+        $db->transComplete();
+
+        if (!$db->transStatus()) {
+            throw new RuntimeException("L'opération n'a pas pu être enregistrée.");
+        }
+
+        return $mvtId;
     }
 
     private function getClientByNumero(string $numero, UserModel $userModel): ?array
     {
         $numero = trim($numero);
 
-        if ($numero === '' || ! preg_match('/^[0-9]{10}$/', $numero)) {
+        if ($numero === '' || !preg_match('/^[0-9]{10}$/', $numero)) {
             return null;
         }
 
-        if (! (new PrefixModel())->isValidNumero($numero)) {
+        if (!$this->prefixModel->isValidNumero($numero)) {
             return null;
         }
 
@@ -173,12 +223,13 @@ class Operation extends BaseController
         return $user;
     }
 
-    private function incrementerSolde(string $numero, float $montant): void
+    // Injection de l'instance de connexion active pour respecter la transaction
+    private function incrementerSolde($db, string $numero, float $montant): void
     {
-        db_connect()->table('user')
-            ->set('solde', 'solde + ' . $montant, false)
-            ->where('numero', $numero)
-            ->update();
+        $db->table('user')
+           ->set('solde', 'solde + ' . $montant, false)
+           ->where('numero', $numero)
+           ->update();
     }
 
     private function erreur(string $message, int $status = 400)
