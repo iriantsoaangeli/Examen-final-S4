@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reçu de transfert — Encaisse</title>
+<title>Reçu de transfert — CASH</title>
 <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
 <link href="bootstrap/css/icons.css" rel="stylesheet">
 <link href="css/custom.css" rel="stylesheet">
@@ -15,8 +15,8 @@
   <!-- Sidebar -->
   <aside class="sidebar">
     <div class="brand">
-      <div class="brand-mark">E</div>
-      <div class="brand-name">Encaisse</div>
+      <div class="brand-mark">C</div>
+      <div class="brand-name">CASH</div>
       <div class="brand-sub">Caisse en ligne</div>
     </div>
 

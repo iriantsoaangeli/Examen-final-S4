@@ -3,10 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Connexion — Encaisse</title>
+<title>Connexion — CASH</title>
 <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
 <link href="bootstrap/css/icons.css" rel="stylesheet">
 <link href="/css/custom.css" rel="stylesheet">
+<style>
+  /* Zoom automatique de la page d'accueil dès son ouverture */
+  html{ zoom: 140%; }
+</style>
 </head>
 <body class="app-body">
 
@@ -14,8 +18,8 @@
   <div class="login-box">
 
     <div class="brand-row">
-      <div class="brand-mark" style="background:var(--accent); color:#fff;">E</div>
-      <span class="font-display fs-4 fw-semibold">Encaisse</span>
+      <div class="brand-mark" style="background:var(--accent); color:#fff;">C</div>
+      <span class="font-display fs-4 fw-semibold">CASH</span>
     </div>
 
     <div class="page-eyebrow">Connexion</div>
