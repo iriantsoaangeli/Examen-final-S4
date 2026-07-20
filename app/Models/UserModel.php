@@ -13,4 +13,19 @@ class UserModel extends Model
     {
         return $this->numero_auto;
     }
+
+    public function exists($numero)
+    {
+        return $this->where('numero', $numero)->first() !== null;
+    }
+
+    public function createUser($numero)
+    {
+
+        $this->insert(['numero' => $numero, 'solde' => 0]);
+        
+        //Retourne faux si ca marche pas 
+        return $this->exists($numero);
+    }
+
 }
