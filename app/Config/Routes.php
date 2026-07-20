@@ -1,11 +1,13 @@
 <?php
 
 use CodeIgniter\Router\RouteCollection;
+use App\Controllers\AuthController;
 
 /**
  * @var RouteCollection $routes
  */
 
+$routes->get('login', 'AuthController::login');
 $routes->get('operations/depot', 'operations\Operation::depot');
 $routes->post('operations/depot', 'operations\Operation::depot');
 $routes->get('operations/retrait', 'operations\Operation::retrait');
