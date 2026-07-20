@@ -33,3 +33,4 @@ in APPPATH/Controllers/AuthController.php on line 3.
 DEBUG - 2026-07-20 12:09:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2026-07-20 12:10:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2026-07-20 12:10:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-07-20 12:13:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
