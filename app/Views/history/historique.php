@@ -52,7 +52,7 @@
                 <div class="tx-date"><?= esc($item['heure']) ?></div>
               </div>
               <div class="tx-amount <?= $item['isPositive'] ? 'pos' : 'neg' ?>">
-                <?= $item['isPositive'] ? '+' : '−' ?>$<?= number_format(abs($item['amount']), 2) ?>
+                <?= $item['isPositive'] ? '+' : '−' ?><?= number_format(abs($item['amount']), 2) ?> Ar
               </div>
             </div>
           <?php endforeach; ?>
