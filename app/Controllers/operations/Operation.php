@@ -85,16 +85,6 @@ class Operation extends BaseController
         return $this->response->setJSON($this->mvtModel->getMouvementsByUser($numero));
     }
 
-    public function gains()
-    {
-        return $this->response->setJSON($this->mvtModel->getGainFrais());
-    }
-
-    public function comptes()
-    {
-        return $this->response->setJSON($this->userModel->getClients());
-    }
-
     private function executerOperation(string $type)
     {
         try {
@@ -153,10 +143,8 @@ class Operation extends BaseController
 
     private function resoudreParticipants(string $type): array
     {
-        // Utilisation du numéro dynamique du provider
         $provider = fn () => $this->userModel->find($this->getProviderNumero());
         
-        // Correction de la syntaxe d'appel de la méthode privée
         $client = fn (string $champ) => $this->getClientByNumero(
             (string) $this->request->getPost($champ),
             $this->userModel
@@ -186,7 +174,6 @@ class Operation extends BaseController
         float $debit,
         string $instant
     ): int {
-        // Centralisation de la connexion via le modèle existant pour éviter les conflits SQLite
         $db = $this->mvtModel->db; 
         $db->transStart();
 
@@ -243,7 +230,6 @@ class Operation extends BaseController
         return $user;
     }
 
-    // Injection de l'instance de connexion active pour respecter la transaction
     private function incrementerSolde($db, string $numero, float $montant): void
     {
         $db->table('user')
