@@ -14,7 +14,6 @@ class TypeMvtModel extends Model
     public function getIdByLibelle(string $libelle): ?int
     {
         $type = $this->where('libelle', strtolower($libelle))->first();
-
         return $type === null ? null : (int) $type['id'];
     }
 }

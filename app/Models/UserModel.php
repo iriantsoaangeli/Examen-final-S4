@@ -37,10 +37,7 @@ class UserModel extends Model
 
     public function createUser($numero)
     {
-
         $this->insert(['numero' => $numero, 'solde' => 0]);
-
-        //Retourne faux si ca marche pas 
         return $this->exists($numero);
     }
 

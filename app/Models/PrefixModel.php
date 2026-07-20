@@ -19,7 +19,7 @@ class PrefixModel extends Model
     public function operatorIdForNumero(string $numero): ?int
     {
         $prefix = $this->where('value', substr($numero, 0, 3))->first();
- 
+
         return $prefix === null ? null : (int) $prefix['operator_id'];
     }
 
@@ -32,7 +32,8 @@ class PrefixModel extends Model
              CASE
                 WHEN provider.numero IS NULL THEN 0
                 ELSE 1
-             END AS has_provider'
+             END AS has_provider',
+            false
         )
             ->join('operator', 'operator.id = prefix.operator_id')
             ->join('user AS provider', 'provider.is_provider = 1 AND prefix.value = substr(provider.numero, 1, 3)', 'left')
@@ -56,7 +57,8 @@ class PrefixModel extends Model
              CASE
                 WHEN MAX(CASE WHEN user.is_provider = 1 THEN 1 ELSE 0 END) = 1 THEN "avec_fournisseur"
                 ELSE "sans_fournisseur"
-             END AS provider_status'
+             END AS provider_status',
+            false
         )
             ->join('operator', 'operator.id = prefix.operator_id')
             ->join('user', 'prefix.value = substr(user.numero, 1, 3)', 'left')

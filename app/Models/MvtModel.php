@@ -42,8 +42,8 @@ class MvtModel extends Model
             ->join('user sender', 'sender.numero = mvt.num_sender')
             ->join('user receiver', 'receiver.numero = mvt.num_receiver')
             ->groupStart()
-                ->where('mvt.num_sender', $numero)
-                ->orWhere('mvt.num_receiver', $numero)
+            ->where('mvt.num_sender', $numero)
+            ->orWhere('mvt.num_receiver', $numero)
             ->groupEnd()
             ->orderBy('mvt.instant', 'DESC')
             ->findAll($limit);
@@ -60,8 +60,8 @@ class MvtModel extends Model
             ->join('user sender', 'sender.numero = mvt.num_sender')
             ->join('user receiver', 'receiver.numero = mvt.num_receiver')
             ->groupStart()
-                ->where('mvt.num_sender', $numero)
-                ->orWhere('mvt.num_receiver', $numero)
+            ->where('mvt.num_sender', $numero)
+            ->orWhere('mvt.num_receiver', $numero)
             ->groupEnd()
             ->orderBy('mvt.instant', 'DESC')
             ->paginate($perPage);
