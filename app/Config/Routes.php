@@ -26,11 +26,17 @@ $routes->get('operations/depot', 'operations\Operation::depot');
 $routes->post('operations/depot', 'operations\Operation::depot');
 $routes->get('operations/retrait', 'operations\Operation::retrait');
 $routes->post('operations/retrait', 'operations\Operation::retrait');
-$routes->get('operations/transfert', 'operations\Operation::transfert');
-$routes->post('operations/transfert', 'operations\Operation::transfert');
-$routes->get('operations/historique/(:segment)', 'operations\Operation::historique/$1');
-$routes->get('operations/situation/gains', 'operations\Operation::gains');
-$routes->get('operations/situation/comptes', 'operations\Operation::comptes');
+
+$routes->group('operations', ['filter' => 'opfilter'], function ($routes) {
+    $routes->get('transfert', 'operations\Operation::transfert');
+    $routes->post('transfert', 'operations\Operation::transfert');
+    $routes->get('historique/(:segment)', 'operations\Operation::historique/$1');
+    $routes->get('situation/gains', 'operations\Operation::gains');
+    $routes->get('situation/comptes', 'operations\Operation::comptes');
+});
+
+$routes->get('operations/transfert-multiple', 'operations\Operation::transfertMultiple');
+$routes->post('operations/transfert-multiple', 'operations\Operation::transfertMultiple');
 
 $routes->get('rapports', 'rapports\Commission::index');
 $routes->get('rapports/comptes', 'rapports\Commission::comptes');
