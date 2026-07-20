@@ -37,6 +37,9 @@ class Filters extends BaseFilters
 
         //Verification de l'authentification
         'auth' => \App\Filters\AuthFilter::class,
+
+        //Verifier si eligible a l'envoi multiple
+        'opfilter' => \App\Filters\OPFilter::class,
     ];
 
     /**
