@@ -45,7 +45,9 @@ class Operation extends BaseController
     public function depot()
     {
         if (strtolower($this->request->getMethod()) !== 'post') {
-            return view('operations/depot');
+            return view('operations/depot', [
+                'activePage' => 'receipt',
+            ]);
         }
         return $this->executerOperation('depot');
     }
@@ -53,7 +55,9 @@ class Operation extends BaseController
     public function retrait()
     {
         if (strtolower($this->request->getMethod()) !== 'post') {
-            return view('operations/retrait');
+            return view('operations/retrait', [
+                'activePage' => 'retrait',
+            ]);
         }
         return $this->executerOperation('retrait');
     }
@@ -61,7 +65,9 @@ class Operation extends BaseController
     public function transfert()
     {
         if (strtolower($this->request->getMethod()) !== 'post') {
-            return view('operations/transfert');
+            return view('operations/transfert', [
+                'activePage' => 'transfert',
+            ]);
         }
         return $this->executerOperation('transfert');
     }
