@@ -5,7 +5,6 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Home::index');
 
 $routes->get('operations/depot', 'operations\Operation::depot');
 $routes->post('operations/depot', 'operations\Operation::depot');

@@ -33,6 +33,10 @@ client:
     - creer un fichier regex.js                                     (Angeli)
       - Creer la fonction verifier numero                           (Angeli)
       - Creer la fonction verifier prefixe  en ajax                 (Angeli)
+  - Authentificaiton
+    - Creer authfilter                                              (Angeli)
+    - Ajouter authfilter a filters.php                              (Angeli)
+    - 
 - Creation des endpoints pour:                                      
   - landing-page                                                    (Angeli)
     - accueil
