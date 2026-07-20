@@ -20,6 +20,13 @@ $numero = (string) (session()->get('numero') ?? '');
 		<div class="page-eyebrow">Opération</div>
 		<h1 class="page-title">Effectuer un transfert</h1>
 
+		<?php if (session('error')) : ?>
+			<div class="alert-ledger error">
+				<i class="bi bi-exclamation-triangle"></i>
+				<span><?= esc(session('error')) ?></span>
+			</div>
+		<?php endif; ?>
+
 		<div class="card-ledger p-4">
 			<form action="<?= base_url('operations/transfert') ?>" method="post" class="row g-3">
 				<div class="col-12 col-md-6">

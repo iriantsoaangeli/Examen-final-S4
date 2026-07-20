@@ -6,6 +6,7 @@ $activePage = $activePage ?? '';
 
 $navItems = [
     ['key' => 'dashboard', 'label' => 'Solde', 'icon' => 'bi-wallet2', 'href' => base_url('dashboard')],
+    ['key' => 'depot', 'label' => 'Dépôt', 'icon' => 'bi-plus-lg', 'href' => base_url('operations/depot')],
     ['key' => 'retrait', 'label' => 'Retrait', 'icon' => 'bi-arrow-down-left', 'href' => base_url('operations/retrait')],
     ['key' => 'transfert', 'label' => 'Transfert', 'icon' => 'bi-arrow-left-right', 'href' => base_url('operations/transfert')],
     ['key' => 'transactions', 'label' => 'Transactions', 'icon' => 'bi-clock-history', 'href' => base_url('transactions')],

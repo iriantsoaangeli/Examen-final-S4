@@ -16,9 +16,9 @@ $routes->get('dashboard', 'Home::dashboard');
 $routes->get('dashboard.html', 'Home::dashboard');
 $routes->get('transactions', 'Home::transactions');
 $routes->get('transactions.html', 'Home::transactions');
-$routes->get('recu', 'operations\Operation::depot');
-$routes->get('receipt', 'operations\Operation::depot');
-$routes->get('receipt.html', 'operations\Operation::depot');
+$routes->get('recu', 'operations\Operation::recu');
+$routes->get('receipt', 'operations\Operation::recu');
+$routes->get('receipt.html', 'operations\Operation::recu');
 
 $routes->get('api/prefix', 'APIController::getPrefix');
 

@@ -44,7 +44,7 @@ class Operation extends BaseController
     {
         if (strtolower($this->request->getMethod()) !== 'post') {
             return view('operations/depot', [
-                'activePage' => 'receipt',
+                'activePage' => 'depot',
             ]);
         }
         return $this->executerOperation('depot');
@@ -68,6 +68,16 @@ class Operation extends BaseController
             ]);
         }
         return $this->executerOperation('transfert');
+    }
+
+    public function recu()
+    {
+        $receipt = session()->getFlashdata('receipt');
+
+        return view('operations/recu', [
+            'activePage' => 'receipt',
+            'receipt' => $receipt,
+        ]);
     }
 
     public function historique(string $numero)
@@ -103,19 +113,24 @@ class Operation extends BaseController
                 throw new RuntimeException('Solde insuffisant.');
             }
 
-            $mvtId = $this->enregistrerMouvement($type, $typeId, $tranche, $sender, $receiver, $montant, $debit);
-            
+            $instant = date('Y-m-d H:i:s');
+            $mvtId = $this->enregistrerMouvement($type, $typeId, $tranche, $sender, $receiver, $montant, $debit, $instant);
         } catch (RuntimeException $e) {
-            return $this->erreur($e->getMessage());
+            return redirect()->back()->withInput()->with('error', $e->getMessage());
         }
 
-        return $this->response->setJSON([
-            'success' => true,
+        session()->setFlashdata('receipt', [
             'id_mvt' => $mvtId,
             'type' => $type,
             'montant' => $montant,
             'frais' => (float) $tranche['frais'],
+            'sender' => $sender['numero'],
+            'receiver' => $receiver['numero'],
+            'description' => (string) ($this->request->getPost('description') ?? ''),
+            'instant' => $instant,
         ]);
+
+        return redirect()->to('recu');
     }
 
     private function resoudreTypeId(string $type): int
@@ -168,7 +183,8 @@ class Operation extends BaseController
         array $sender,
         array $receiver,
         float $montant,
-        float $debit
+        float $debit,
+        string $instant
     ): int {
         // Centralisation de la connexion via le modèle existant pour éviter les conflits SQLite
         $db = $this->mvtModel->db; 
@@ -189,7 +205,7 @@ class Operation extends BaseController
             'num_sender' => $sender['numero'],
             'num_receiver' => $receiver['numero'],
             'description' => (string) ($this->request->getPost('description') ?? ''),
-            'instant' => date('Y-m-d H:i:s'),
+            'instant' => $instant,
         ], true);
 
         $this->mvtDetailsModel->insert([
@@ -236,13 +252,4 @@ class Operation extends BaseController
            ->update();
     }
 
-    private function erreur(string $message, int $status = 400)
-    {
-        return $this->response
-            ->setStatusCode($status)
-            ->setJSON([
-                'success' => false,
-                'message' => $message,
-            ]);
-    }
 }

@@ -27,9 +27,9 @@
           <div class="balance-sub">Mis à jour aujourd'hui à 09:41</div>
 
           <div class="balance-actions">
-            <button class="btn-ledger primary"><i class="bi bi-arrow-up-right"></i> Envoyer</button>
-            <button class="btn-ledger"><i class="bi bi-arrow-down-left"></i> Retirer</button>
-            <button class="btn-ledger"><i class="bi bi-plus-lg"></i> Recharger</button>
+            <a href="<?= base_url('operations/transfert') ?>" class="btn-ledger primary"><i class="bi bi-arrow-up-right"></i> Envoyer</a>
+            <a href="<?= base_url('operations/retrait') ?>" class="btn-ledger"><i class="bi bi-arrow-down-left"></i> Retirer</a>
+            <a href="<?= base_url('operations/depot') ?>" class="btn-ledger"><i class="bi bi-plus-lg"></i> Recharger</a>
           </div>
         </div>
       </div>
