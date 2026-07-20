@@ -51,13 +51,13 @@ if ($receipt !== null) {
           <div class="receipt-top">
             <div class="receipt-status"><i class="bi bi-check-lg"></i></div>
             <div class="receipt-headline">
-              Vous avez <?= esc($verbe) ?> <b>$<?= number_format((float) $receipt['montant'], 2) ?></b>
+              Vous avez <?= esc($verbe) ?> <b><?= number_format((float) $receipt['montant'], 2) ?>Ar</b>
               <?= $type === 'retrait' ? '' : ($isSender ? 'à' : 'de') ?>
             </div>
             <?php if ($type !== 'retrait') : ?>
               <div class="receipt-headline"><b style="font-size:16px;"><?= esc($contrepartie) ?></b></div>
             <?php endif; ?>
-            <div class="receipt-amount font-mono">$<?= number_format((float) $receipt['montant'], 2) ?></div>
+            <div class="receipt-amount font-mono"><?= number_format((float) $receipt['montant'], 2) ?>Ar</div>
           </div>
 
           <div class="receipt-body">
@@ -71,12 +71,12 @@ if ($receipt !== null) {
             </div>
             <div class="receipt-line">
               <span class="k">Montant nominal</span>
-              <span class="v">$<?= number_format((float) $receipt['montant'], 2) ?></span>
+              <span class="v"><?= number_format((float) $receipt['montant'], 2) ?>Ar</span>
             </div>
             <div class="receipt-line">
               <span class="k">Frais</span>
               <span class="v" style="color:var(--accent-dark);">
-                <?= (float) $receipt['frais'] > 0 ? '$' . number_format((float) $receipt['frais'], 2) : 'Gratuit' ?>
+                <?= (float) $receipt['frais'] > 0 ? number_format((float) $receipt['frais'], 2) . 'Ar' : 'Gratuit' ?>
               </span>
             </div>
             <div class="receipt-line">
