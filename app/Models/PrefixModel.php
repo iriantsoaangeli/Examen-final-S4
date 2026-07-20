@@ -16,15 +16,52 @@ class PrefixModel extends Model
         return $this->where('value', substr($numero, 0, 3))->first() !== null;
     }
 
-    /**
-     * Retourne tous les préfixes avec le nom de l'opérateur associé.
-     * Utilisé par APIController::getPrefix pour l'AJAX du login.
-     */
+    public function operatorIdForNumero(string $numero): ?int
+    {
+        $prefix = $this->where('value', substr($numero, 0, 3))->first();
+ 
+        return $prefix === null ? null : (int) $prefix['operator_id'];
+    }
+
     public function allWithOperator(): array
     {
-        return $this->select('prefix.value, prefix.operator_id, operator.name AS operator')
+        return $this->select(
+            'prefix.value,
+             prefix.operator_id,
+             operator.name AS operator,
+             CASE
+                WHEN provider.numero IS NULL THEN 0
+                ELSE 1
+             END AS has_provider'
+        )
             ->join('operator', 'operator.id = prefix.operator_id')
+            ->join('user AS provider', 'provider.is_provider = 1 AND prefix.value = substr(provider.numero, 1, 3)', 'left')
             ->orderBy('prefix.value', 'ASC')
+            ->findAll();
+    }
+
+    public function operatorsWithProviders(): array
+    {
+        return $this->select(
+            'operator.id AS operator_id,
+             operator.name AS operator_name,
+             MAX(CASE
+                WHEN user.is_provider = 1 THEN user.numero
+                ELSE NULL
+             END) AS provider_numero,
+             MAX(CASE
+                WHEN user.is_provider = 1 THEN user.nom
+                ELSE NULL
+             END) AS provider_name,
+             CASE
+                WHEN MAX(CASE WHEN user.is_provider = 1 THEN 1 ELSE 0 END) = 1 THEN "avec_fournisseur"
+                ELSE "sans_fournisseur"
+             END AS provider_status'
+        )
+            ->join('operator', 'operator.id = prefix.operator_id')
+            ->join('user', 'prefix.value = substr(user.numero, 1, 3)', 'left')
+            ->groupBy('operator.id')
+            ->orderBy('operator.name', 'ASC')
             ->findAll();
     }
 }
