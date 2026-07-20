@@ -10,6 +10,7 @@ $navItems = [
     ['key' => 'retrait', 'label' => 'Retrait', 'icon' => 'bi-arrow-down-left', 'href' => base_url('operations/retrait')],
     ['key' => 'transfert', 'label' => 'Transfert', 'icon' => 'bi-arrow-left-right', 'href' => base_url('operations/transfert')],
     ['key' => 'transactions', 'label' => 'Transactions', 'icon' => 'bi-clock-history', 'href' => base_url('transactions')],
+    ['key' => 'rapports', 'label' => 'Rapports', 'icon' => 'bi-graph-up', 'href' => base_url('rapports')],
     ['key' => 'receipt', 'label' => 'Reçus', 'icon' => 'bi-receipt', 'href' => base_url('recu')],
 ];
 ?>
@@ -21,9 +22,10 @@ $navItems = [
     </div>
 
     <ul class="nav-ledger">
-        <?php foreach ($navItems as $item) : ?>
+        <?php foreach ($navItems as $item): ?>
             <li>
-                <a href="<?= esc($item['href'], 'attr') ?>" class="nav-link <?= $activePage === $item['key'] ? 'active' : '' ?>">
+                <a href="<?= esc($item['href'], 'attr') ?>"
+                    class="nav-link <?= $activePage === $item['key'] ? 'active' : '' ?>">
                     <i class="bi <?= esc($item['icon'], 'attr') ?>"></i>
                     <?= esc($item['label']) ?>
                 </a>
