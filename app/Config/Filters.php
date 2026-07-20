@@ -83,6 +83,7 @@ class Filters extends BaseFilters
                     'login',       // Exclude the login page so users don't get trapped in a redirect loop
                     'auth',        // Exclude the login form submission (POST /auth)
                     'auth/*',      // Exclude your processing/submission routes (e.g., auth/loginSubmit)
+                    'api/*',       // Exclude public API endpoints (e.g., prefix lookup for the login form)
                     'register',    // Exclude registration page if you have one
                     'assets/*',    // Exclude your CSS, images, and Javascript folders
                 ]
