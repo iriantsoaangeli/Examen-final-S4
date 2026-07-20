@@ -108,13 +108,14 @@ mvt_details :
   - [x] Mise a jour base de donnees                                 
     - [x] Ajouter d'autres operateur                                (Angeli)
       - [x] Ajouter Airtel,Tout les numeros yas                     (Angeli)
-      - [ ] Ajout de notre propre operteur
-  - [ ] Creer le filtre OPFilter.php                                (Angeli)
-    - [ ] Empecher l'acces a la deuxieme page d'envoi 
-    - [ ] Creer une copie de la page envoi, envoi                   (Angeli)
+      - [x] Ajout de notre propre operteur                          (Angeli)
+  - [x] Creer le filtre OPFilter.php                                (Angeli)
+    - [x]  Empecher l'acces a la deuxieme page d'envoi              (Angeli)
+    - [x] Creer une copie de la page envoi, envoi                   (Angeli)
         multiple disponible                 
-  - [ ] Modifier Controllers\operations\Operation pour              (Angeli)
+  - [x] Modifier Controllers\operations\Operation pour              (Angeli)
         splitter lors d'envoi multiple  
+  - [ ] modifier log in pour inclure si l'user est un operateur     (Angeli)
   - [x] Creer la page Situation gain via differents frais           (Randy)
     - [x] Ajouter situation de montant pour chaque operateur        (Randy)
     - [x] Renommer Rapport en Commission                            (Randy)
