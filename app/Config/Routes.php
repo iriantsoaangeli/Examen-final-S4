@@ -8,6 +8,9 @@ use App\Controllers\AuthController;
  */
 
 $routes->get('login', 'AuthController::login');
+$routes->post('auth', 'AuthController::authenticate');
+$routes->get('logout', 'AuthController::logout');
+
 $routes->get('operations/depot', 'operations\Operation::depot');
 $routes->post('operations/depot', 'operations\Operation::depot');
 $routes->get('operations/retrait', 'operations\Operation::retrait');
