@@ -28,6 +28,13 @@ $numero = (string) (session()->get('numero') ?? '');
 		<?php endif; ?>
 
 		<div class="card-ledger p-4">
+			<div class="op-header">
+				<div class="icon-badge" style="background:#E9EEFB; color:#2A4FD6;"><i class="bi bi-diagram-3"></i></div>
+				<div>
+					<div class="op-title">Transfert multiple</div>
+					<div class="op-sub">Envoyez le même montant à plusieurs destinataires en une fois.</div>
+				</div>
+			</div>
 			<form action="<?= base_url('operations/transfert-multiple') ?>" method="post" class="row g-3" id="transferMultipleForm">
 				<div class="col-12 col-md-6">
 					<label class="form-label">Votre numéro</label>
@@ -47,8 +54,8 @@ $numero = (string) (session()->get('numero') ?? '');
 
 				<!-- Fieldset dynamique pour lister les numéros validés en multiselect -->
 				<div class="col-12">
-					<fieldset class="border rounded p-3 bg-light d-none" id="destinataires_fieldset">
-						<legend class="float-none w-auto px-2 fs-6 fw-bold text-secondary">Liste des destinataires</legend>
+					<fieldset class="card-ledger p-3 d-none" id="destinataires_fieldset">
+						<legend class="float-none w-auto px-2">Liste des destinataires</legend>
 						<div id="destinataires_container" class="d-flex flex-column gap-2">
 							<!-- Les lignes de numéro avec checkbox + bouton (-) seront insérées ici par JS -->
 						</div>
@@ -66,7 +73,7 @@ $numero = (string) (session()->get('numero') ?? '');
 
 				<div class="col-12 d-flex gap-2 mt-4">
 					<button type="submit" class="btn-ledger primary" id="btn_submit" disabled>Envoyer les transferts</button>
-					<a href="<?= base_url('operations') ?>" class="btn btn-secondary">Cancel</a>
+					<a href="<?= base_url('dashboard') ?>" class="btn btn-secondary">Annuler</a>
 				</div>
 			</form>
 		</div>

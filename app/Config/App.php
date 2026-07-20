@@ -16,7 +16,22 @@ class App extends BaseConfig
      *
      * E.g., http://example.com/
      */
+    // Valeur de secours (utilisée en CLI, ou si l'hôte de la requête n'est
+    // pas disponible). En HTTP, le constructeur ci-dessous écrase cette
+    // valeur avec l'hôte réellement utilisé par le navigateur, pour que le
+    // site fonctionne quelle que soit l'adresse d'accès (localhost,
+    // 127.0.0.1, IP locale pour tester sur smartphone, etc.).
     public string $baseURL = 'http://localhost:8080/';
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        if (! empty($_SERVER['HTTP_HOST'])) {
+            $scheme = (! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+            $this->baseURL = $scheme . '://' . $_SERVER['HTTP_HOST'] . '/';
+        }
+    }
 
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
