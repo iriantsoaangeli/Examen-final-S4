@@ -5,12 +5,28 @@ class UserModel extends Model
 {
     protected $table = 'user';
     protected $primaryKey = 'numero';
-    protected $allowedFields = ['numero', 'solde'];
+    protected $returnType = 'array';
+    protected $allowedFields = ['numero', 'nom', 'solde', 'is_provider'];
 
-    private $numero_auto;
+    private $num_provider;
 
-    public function getNumeroAuto()
+    public function getProviderNumero(): string
     {
-        return $this->numero_auto;
+        if ($this->num_provider === null) {
+            $provider = $this->where('is_provider', 1)->first();
+            $this->num_provider = $provider['numero'] ?? '';
+        }
+        return $this->num_provider;
+    }
+    public function findByNumero(string $numero): ?array
+    {
+        return $this->where('numero', $numero)->first();
+    }
+
+    public function getClients(): array
+    {
+        return $this->where('is_provider', 0)
+            ->orderBy('numero', 'ASC')
+            ->findAll();
     }
 }

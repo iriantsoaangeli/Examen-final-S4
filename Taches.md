@@ -13,8 +13,11 @@ tranche:
 types_operations:
 -id, libelle (depot, retrait, transfert)
 
-mvt_frais:
+mvt:
 id,id_type, montant, montant_frais,sender,recever description
+
+mvt_details:
+-id, id_mvt
 
 client:
 -id,nom,id_op,numero,solde
