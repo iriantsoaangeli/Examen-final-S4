@@ -11,7 +11,7 @@ class AuthFilter implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         // If the session 'isLoggedIn' is missing or false, redirect to login page
-        if (!session()->get('numero')) {
+        if (!session()->get('isLoggedIn')) {
             return redirect()->to('/login')->with('error', 'Please login first.');
         }
     }
