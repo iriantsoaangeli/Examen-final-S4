@@ -59,58 +59,10 @@ class Home extends BaseController
 		]);
 	}
 
-	public function transactions()
+	public function transactions(): string
 	{
-		$numero = (string) (session()->get('numero') ?? '');
-
-		if ($numero === '') {
-			return redirect()->to('/login');
-		}
-
-		$userModel = new UserModel();
-		$mvtModel = new MvtModel();
-		$currentUser = $userModel->findByNumero($numero);
-
-		if ($currentUser === null) {
-			return redirect()->to('/login');
-		}
-
-		$transactions = array_map(
-			function (array $transaction) use ($numero): array {
-				$isSender = $transaction['num_sender'] === $numero;
-				$isDeposit = $transaction['type_libelle'] === 'depot';
-				$isWithdraw = $transaction['type_libelle'] === 'retrait';
-				$counterpartyNom = $isSender ? ($transaction['receiver_nom'] ?? $transaction['num_receiver']) : ($transaction['sender_nom'] ?? $transaction['num_sender']);
-
-				if ($isDeposit) {
-					$label = $isSender ? 'Dépôt envoyé' : 'Dépôt reçu';
-				} elseif ($isWithdraw) {
-					$label = $isSender ? 'Retrait effectué' : 'Retrait reçu';
-				} else {
-					$label = $isSender ? 'Transfert envoyé' : 'Transfert reçu';
-				}
-
-				$amount = (float) $transaction['montant'];
-				$displayAmount = $isSender ? -($amount + (float) $transaction['frais']) : $amount;
-
-				return [
-					'label' => $label,
-					'counterparty' => $counterpartyNom,
-					'instant' => $transaction['instant'],
-					'amount' => $displayAmount,
-					'isPositive' => $displayAmount >= 0,
-					'fee' => (float) $transaction['frais'],
-					'type' => $transaction['type_libelle'],
-				];
-			},
-			$mvtModel->paginateForUser($numero, 10)
-		);
-
 		return view('history/historique', [
 			'activePage' => 'transactions',
-			'currentUser' => $currentUser,
-			'transactions' => $transactions,
-			'pager' => $mvtModel->pager,
 		]);
 	}
 
