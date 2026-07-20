@@ -23,7 +23,7 @@ VALUES
 -- retraits, cf. Operation::PROVIDER_NUMERO)
 -- ---------------------------------------------------------
 INSERT INTO user (numero, nom, solde, is_provider)
-VALUES ('0340000001', 'Fournisseur Telma', 0, 1);
+VALUES ('0340000000', 'Fournisseur Telma', 0, 1);
 
 -- ---------------------------------------------------------
 -- Types de mouvement
