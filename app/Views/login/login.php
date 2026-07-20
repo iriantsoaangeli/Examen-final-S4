@@ -73,19 +73,7 @@
 
         <button type="submit" class="btn-full">Se connecter</button>
 
-        <div class="divider-or">ou</div>
-
-        <button type="button" class="btn-outline-ledger mb-2">
-          <i class="bi bi-google"></i> Continuer avec Google
-        </button>
-        <button type="button" class="btn-outline-ledger">
-          <i class="bi bi-apple"></i> Continuer avec Apple
-        </button>
-      </form>
-
-      <p class="text-center text-muted mt-4" style="font-size:13.5px;">
-        Pas encore de compte ? <a href="#" class="fw-semibold" style="color:var(--ink);">Créer un compte</a>
-      </p>
+     
     </div>
   </div>
 
