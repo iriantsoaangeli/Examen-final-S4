@@ -13,7 +13,6 @@ use RuntimeException;
 
 class Operation extends BaseController
 {
-    // Déclaration des propriétés de la classe
     private UserModel $userModel;
     private MvtModel $mvtModel;
     private PrefixModel $prefixModel;
@@ -23,7 +22,6 @@ class Operation extends BaseController
     
     private ?string $providerNumero = null;
 
-    // Initialisation des modèles dans le constructeur
     public function __construct()
     {
         $this->userModel = new UserModel();
@@ -37,7 +35,7 @@ class Operation extends BaseController
     private function getProviderNumero(): string
     {
         if ($this->providerNumero === null) {
-            $this->providerNumero = $this->userModel->getProviderNumero();
+            $this->providerNumero ??= $this->userModel->getProviderNumero();
         }
         return $this->providerNumero;
     }
