@@ -5,6 +5,11 @@ $tauxMoyen = ! empty($configurationCommissions)
 $tauxMax = ! empty($configurationCommissions)
     ? max(array_column($configurationCommissions, 'commission_rate'))
     : 0;
+
+$commissionsParOperateur = [];
+foreach ($configurationCommissions as $commission) {
+    $commissionsParOperateur[$commission['operator_sender_name']][] = $commission;
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -54,27 +59,36 @@ $tauxMax = ! empty($configurationCommissions)
     </div>
 
     <div class="section-heading">
-      <h2>Détail par couple d'opérateurs</h2>
+      <h2>Détail par opérateur</h2>
     </div>
-    <div class="card-ledger">
-      <?php if (empty($configurationCommissions)) : ?>
+    <?php if (empty($commissionsParOperateur)) : ?>
+      <div class="card-ledger">
         <div class="tx-row"><div class="tx-info"><div class="tx-name">Aucun barème configuré</div></div></div>
-      <?php else : ?>
-        <?php foreach ($configurationCommissions as $commission) : ?>
-          <?php $meme = $commission['type_commission'] === 'meme_operateur'; ?>
-          <div class="tx-row">
-            <div class="tx-icon <?= $meme ? 'merchant-pay' : 'merchant-refund' ?>">
-              <i class="bi <?= $meme ? 'bi-arrow-repeat' : 'bi-shuffle' ?>"></i>
+      </div>
+    <?php else : ?>
+      <div class="row g-3">
+        <?php foreach ($commissionsParOperateur as $operateurNom => $commissions) : ?>
+          <div class="col-md-6">
+            <div class="card-ledger h-100">
+              <div class="tx-group-label" style="margin-top:6px;"><i class="bi bi-sim"></i> <?= esc($operateurNom) ?></div>
+              <?php foreach ($commissions as $commission) : ?>
+                <?php $meme = $commission['type_commission'] === 'meme_operateur'; ?>
+                <div class="tx-row">
+                  <div class="tx-icon <?= $meme ? 'merchant-pay' : 'merchant-refund' ?>">
+                    <i class="bi <?= $meme ? 'bi-arrow-repeat' : 'bi-shuffle' ?>"></i>
+                  </div>
+                  <div class="tx-info">
+                    <div class="tx-name">→ <?= esc($commission['operator_receiver_name']) ?></div>
+                    <div class="tx-date"><?= $meme ? 'Même opérateur' : 'Inter-opérateur' ?></div>
+                  </div>
+                  <div class="tx-amount pos"><?= number_format((float) $commission['commission_rate'] * 100, 2, ',', ' ') ?> %</div>
+                </div>
+              <?php endforeach; ?>
             </div>
-            <div class="tx-info">
-              <div class="tx-name"><?= esc($commission['operator_sender_name']) ?> → <?= esc($commission['operator_receiver_name']) ?></div>
-              <div class="tx-date"><?= $meme ? 'Même opérateur' : 'Inter-opérateur' ?></div>
-            </div>
-            <div class="tx-amount pos"><?= number_format((float) $commission['commission_rate'] * 100, 2, ',', ' ') ?> %</div>
           </div>
         <?php endforeach; ?>
-      <?php endif; ?>
-    </div>
+      </div>
+    <?php endif; ?>
   </main>
 </div>
 
