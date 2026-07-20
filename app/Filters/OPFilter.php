@@ -12,7 +12,7 @@ class OPFilter implements FilterInterface
     {
         // If the session 'isLoggedIn' is missing or false, redirect to login page
         if (!session()->get('isOP')) {
-            return redirect()->to('/login')->with('error', 'Please login first.');
+            return redirect()->to('operations/transfert-multiple');
         }
     }
 
