@@ -18,11 +18,6 @@
     <div class="page-eyebrow">Registre</div>
     <h1 class="page-title">Historique des transactions</h1>
 
-    <div class="section-heading">
-      <h2>Compte <?= esc($currentUser['numero'] ?? '') ?></h2>
-      <div class="see-all">Solde : Ar <?= number_format((float) ($currentUser['solde'] ?? 0), 0, ',', ' ') ?></div>
-    </div>
-
     <div class="row g-3 align-items-center mb-2">
       <div class="col-md-8">
         <div class="search-bar">
@@ -37,25 +32,68 @@
       </div>
     </div>
 
+    <!-- Aujourd'hui -->
+    <div class="tx-group-label">Aujourd'hui</div>
     <div class="card-ledger">
-      <?php foreach ($transactions as $transaction) : ?>
-        <div class="tx-row">
-          <div class="tx-icon <?= $transaction['isPositive'] ? 'merchant-sale' : 'merchant-refund' ?>">
-            <i class="bi <?= $transaction['isPositive'] ? 'bi-arrow-down-left' : 'bi-arrow-up-right' ?>"></i>
-          </div>
-          <div class="tx-info">
-            <div class="tx-name"><?= esc($transaction['label']) ?> · <?= esc($transaction['counterparty']) ?></div>
-            <div class="tx-date"><?= esc(date('d/m/Y · H:i', strtotime($transaction['instant']))) ?></div>
-          </div>
-          <div class="tx-amount <?= $transaction['isPositive'] ? 'pos' : 'neg' ?>">
-            <?= $transaction['isPositive'] ? '+' : '−' ?>Ar <?= number_format(abs((float) $transaction['amount']), 0, ',', ' ') ?>
-          </div>
+      <div class="tx-row">
+        <div class="tx-icon merchant-vimeo"><i class="bi bi-vimeo"></i></div>
+        <div class="tx-info">
+          <div class="tx-name">Abonnement Vimeo</div>
+          <div class="tx-date">20 mai · 13:28</div>
         </div>
-      <?php endforeach; ?>
+        <div class="tx-amount neg">−$20.00</div>
+      </div>
+      <div class="tx-row">
+        <div class="tx-icon merchant-video"><i class="bi bi-youtube"></i></div>
+        <div class="tx-info">
+          <div class="tx-name">Paiements créateur</div>
+          <div class="tx-date">20 mai · 10:32</div>
+        </div>
+        <div class="tx-amount pos">+$12.99</div>
+      </div>
+      <div class="tx-row">
+        <div class="tx-icon merchant-pay"><i class="bi bi-paypal"></i></div>
+        <div class="tx-info">
+          <div class="tx-name">Paiement d'achat</div>
+          <div class="tx-date">20 mai · 09:24</div>
+        </div>
+        <div class="tx-amount neg">−$32.00</div>
+      </div>
+      <div class="tx-row">
+        <div class="tx-icon merchant-sale"><i class="bi bi-cash-coin"></i></div>
+        <div class="tx-info">
+          <div class="tx-name">Revenus de vente</div>
+          <div class="tx-date">20 mai · 09:01</div>
+        </div>
+        <div class="tx-amount pos">+$23.99</div>
+      </div>
+    </div>
+
+    <!-- 19 mai -->
+    <div class="tx-group-label">19 mai 2025</div>
+    <div class="card-ledger">
+      <div class="tx-row">
+        <div class="tx-icon merchant-refund"><i class="bi bi-arrow-counterclockwise"></i></div>
+        <div class="tx-info">
+          <div class="tx-name">Remboursement reçu</div>
+          <div class="tx-date">19 mai · 13:28</div>
+        </div>
+        <div class="tx-amount pos">+$45.50</div>
+      </div>
+      <div class="tx-row">
+        <div class="tx-icon merchant-transfer"><i class="bi bi-paypal"></i></div>
+        <div class="tx-info">
+          <div class="tx-name">Virement entrant</div>
+          <div class="tx-date">19 mai · 09:24</div>
+        </div>
+        <div class="tx-amount pos">+$89.75</div>
+      </div>
     </div>
 
     <div class="d-flex justify-content-center mt-4">
-      <?= $pager->links('transactions', 'bootstrap_full') ?>
+      <button class="btn-ledger" style="background:var(--card); color:var(--ink); border-color:var(--paper-line);">
+        Charger plus <i class="bi bi-chevron-down"></i>
+      </button>
     </div>
 
   </main>
