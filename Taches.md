@@ -25,7 +25,11 @@ client:
 - Creation de la base.sql (Angeli)
 - Creation des tables de la base (Angeli)
 - Creation de la page de login (Angeli)
+  - creer template (Angeli)
   - login avec numero , no pwd (Angeli)
+    - creer un fichier regex.js (Angeli)
+      - Creer la fonction verifier numero (Angeli)
+      - Creer la fonction verifier prefixe  en ajax (Angeli)
 - Creation des endpoints pour: (Angeli)
   - landing-page
     - accueil
