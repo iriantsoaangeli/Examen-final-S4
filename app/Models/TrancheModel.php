@@ -9,7 +9,7 @@ class TrancheModel extends Model
     protected $table = 'tranche';
     protected $primaryKey = 'id';
     protected $returnType = 'array';
-    protected $allowedFields = ['inf', 'sup', 'frais', 'id_type'];
+    protected $allowedFields = ['inf', 'sup', 'frais','promotion', 'id_type'];
 
     public function findByTypeAndMontant(int $typeId, float $montant): ?array
     {
@@ -21,5 +21,9 @@ class TrancheModel extends Model
             ->groupEnd()
             ->orderBy('inf', 'ASC')
             ->first();
+    }
+
+    public function getPromotion() {
+        return $this->find('promotion');
     }
 }

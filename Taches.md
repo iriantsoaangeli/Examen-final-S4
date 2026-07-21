@@ -133,4 +133,6 @@ mvt_details :
       - [x] type commission interne / inter-operateur               (Randy)
       - [x] statut montant a envoyer                                (Randy)
       - [x] detection fournisseur par operateur                     (Randy)
+  - [ ] Pourcentage de frais de transfert vers les memes operateurs(Promotion)(Randy)
+    - [ ] doit etre enregistrer dans la base                        (Randy)
 ---

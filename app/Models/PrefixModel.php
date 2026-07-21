@@ -19,7 +19,7 @@ class PrefixModel extends Model
     }
     public function isValidNumero(string $numero): bool
     {
-        return $this->findPrefix($numero) !== null;
+        return $this->where('value', substr($numero, 0, 3))->first() !== null;
     }
 
     public function operatorIdForNumero(string $numero): ?int
