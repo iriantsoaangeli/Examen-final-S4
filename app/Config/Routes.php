@@ -2,6 +2,7 @@
 
 use CodeIgniter\Router\RouteCollection;
 use App\Controllers\AuthController;
+use App\Controllers\EpargneController;
 
 /**
  * @var RouteCollection $routes
@@ -42,3 +43,5 @@ $routes->get('rapports', 'rapports\Commission::index');
 $routes->get('rapports/bareme', 'rapports\Commission::bareme');
 $routes->get('rapports/operateurs', 'rapports\Commission::operateurs');
 $routes->get('rapports/comptes', 'rapports\Commission::comptes');
+
+$routes->get('epargne/form','EpargneController::getForm') ;

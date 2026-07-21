@@ -343,7 +343,7 @@ class Operation extends BaseController
         if (empty($receivers) || !is_array($receivers)) {
             throw new RuntimeException('Veuillez sélectionner au moins un destinataire valide.');
         }
-        $promotion = $this->trancheModel . getPromotion();
+        $promotion = $this->trancheModel->getPromotion();
         $montantGlobal = $this->getPostAmount('montant');
         $senderNumero = $this->getPostString('numero_sender');
         $senderPrefix = $this->prefixModel->findPrefix($senderNumero);
