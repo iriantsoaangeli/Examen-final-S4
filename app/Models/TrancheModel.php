@@ -16,8 +16,8 @@ class TrancheModel extends Model
         return $this->where('id_type', $typeId)
             ->where('inf <=', $montant)
             ->groupStart()
-                ->where('sup >=', $montant)
-                ->orWhere('sup', null)
+            ->where('sup >=', $montant)
+            ->orWhere('sup', null)
             ->groupEnd()
             ->orderBy('inf', 'ASC')
             ->first();
