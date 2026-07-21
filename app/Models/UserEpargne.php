@@ -13,6 +13,6 @@ class UserEpargne extends Model
     }
 
     public function setPourcentage($numero,$pourcentage){
-        
+         
     }
 }
