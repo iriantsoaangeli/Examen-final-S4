@@ -28,6 +28,13 @@ $numero = (string) (session()->get('numero') ?? '');
 		<?php endif; ?>
 
 		<div class="card-ledger p-4">
+			<div class="op-header">
+				<div class="icon-badge" style="background:#F6E9E4; color:var(--neg);"><i class="bi bi-arrow-down-left"></i></div>
+				<div>
+					<div class="op-title">Nouveau retrait</div>
+					<div class="op-sub">Retirez des fonds de votre compte.</div>
+				</div>
+			</div>
 			<form action="<?= base_url('operations/retrait') ?>" method="post" class="row g-3">
 				<div class="col-12 col-md-6">
 					<label class="form-label">Votre numéro</label>

@@ -30,6 +30,7 @@ CREATE TABLE tranche (
     inf DECIMAL(10, 2) NOT NULL,
     sup DECIMAL(10, 2),
     frais DECIMAL(10, 2) NOT NULL DEFAULT 0,
+    promotion DECIMAL(10, 2) NOT NULL,
     id_type INT NOT NULL,
     FOREIGN KEY (id_type) REFERENCES type_mvt (id)
 );

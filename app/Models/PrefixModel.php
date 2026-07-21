@@ -11,6 +11,12 @@ class PrefixModel extends Model
     protected $returnType = 'array';
     protected $allowedFields = ['value', 'operator_id'];
 
+    public function findPrefix(String $numero) {
+        if(strlen($numero) < 3) {
+            return null;
+        }
+        return $this->where('value', substr($numero, 0, 3))->first();
+    }
     public function isValidNumero(string $numero): bool
     {
         return $this->where('value', substr($numero, 0, 3))->first() !== null;
@@ -18,8 +24,8 @@ class PrefixModel extends Model
 
     public function operatorIdForNumero(string $numero): ?int
     {
-        $prefix = $this->where('value', substr($numero, 0, 3))->first();
-        return $prefix === null ? null : (int) $prefix['operator_id'];
+        $prefix = $this->findPrefix($numero);
+        return $prefix ? (int) $prefix['operator_id'] : null;
     }
 
     public function allWithOperator(): array

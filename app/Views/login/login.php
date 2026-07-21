@@ -7,10 +7,6 @@
 <link href="<?= base_url('bootstrap/css/bootstrap.css') ?>" rel="stylesheet">
 <link href="<?= base_url('bootstrap/css/icons.css') ?>" rel="stylesheet">
 <link href="<?= base_url('css/custom.css') ?>" rel="stylesheet">
-<style>
-  /* Zoom automatique de la page d'accueil dès son ouverture */
-  html{ zoom: 140%; }
-</style>
 </head>
 <body class="app-body">
 
@@ -64,6 +60,9 @@
   </div>
 </div>
 
+<script>
+  window.PREFIX_API_URL = <?= json_encode(base_url('api/prefix')) ?>;
+</script>
 <script src="<?= base_url('script/regex.js') ?>"></script>
 <script>
   const numeroInput = document.getElementById('numero');

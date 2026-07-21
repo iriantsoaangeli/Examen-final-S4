@@ -343,15 +343,25 @@ class Operation extends BaseController
         if (empty($receivers) || !is_array($receivers)) {
             throw new RuntimeException('Veuillez sélectionner au moins un destinataire valide.');
         }
-
+        $promotion = $this->trancheModel . getPromotion();
         $montantGlobal = $this->getPostAmount('montant');
         $senderNumero = $this->getPostString('numero_sender');
+        $senderPrefix = $this->prefixModel->findPrefix($senderNumero);
         $description = $this->getPostString('description', 'Transfert multiple');
         $nombreDestinataires = count($receivers);
         $montantUnitaire = $montantGlobal / $nombreDestinataires;
         $typeId = $this->resoudreTypeId('transfert');
         $tranche = $this->resoudreTranche($typeId, $montantUnitaire);
+        $receiversPrefix = [];
         $fraisUnitaire = (float) $tranche['frais'];
+        foreach ($receivers as $rec) {
+            $receiversPrefix = $this->prefixModel->findPrefix($rec);
+        }
+        foreach ($receiversPrefix as $pre) {
+            if ($senderPrefix === $pre) {
+                $fraisUnitaire = (float) $tranche['frais'] * (int) $promotion / 100;
+            }
+        }
         $sender = $this->findClientByNumero($senderNumero);
 
         if ($sender === null) {

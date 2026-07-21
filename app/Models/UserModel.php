@@ -8,15 +8,9 @@ class UserModel extends Model
     protected $returnType = 'array';
     protected $allowedFields = ['numero', 'nom', 'solde', 'is_provider'];
 
-    private $num_provider;
-
-    public function getProviderNumero(): string
+    public function getProviderNumero(): array
     {
-        if ($this->num_provider === null) {
-            $provider = $this->where('is_provider', 1)->first();
-            $this->num_provider = $provider['numero'] ?? '';
-        }
-        return $this->num_provider;
+        return $this->where('is_provider', 1)->findAll();
     }
     public function findByNumero(string $numero): ?array
     {
@@ -37,10 +31,7 @@ class UserModel extends Model
 
     public function createUser($numero)
     {
-
         $this->insert(['numero' => $numero, 'solde' => 0]);
-
-        //Retourne faux si ca marche pas 
         return $this->exists($numero);
     }
 

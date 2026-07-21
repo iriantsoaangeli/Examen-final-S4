@@ -14,7 +14,16 @@ $navItems = [
     ['key' => 'receipt', 'label' => 'Reçus', 'icon' => 'bi-receipt', 'href' => base_url('recu')],
 ];
 ?>
-<aside class="sidebar">
+<button type="button" class="sidebar-burger" id="sidebarBurger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="sidebar">
+    <i class="bi bi-list"></i>
+</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+<aside class="sidebar" id="sidebar">
+    <button type="button" class="sidebar-collapse-btn" id="sidebarCollapseBtn" aria-label="Réduire le menu">
+        <i class="bi bi-chevron-left"></i>
+    </button>
+
     <div class="brand">
         <div class="brand-mark">C</div>
         <div class="brand-name">CASH</div>
@@ -27,7 +36,7 @@ $navItems = [
                 <a href="<?= esc($item['href'], 'attr') ?>"
                     class="nav-link <?= $activePage === $item['key'] ? 'active' : '' ?>">
                     <i class="bi <?= esc($item['icon'], 'attr') ?>"></i>
-                    <?= esc($item['label']) ?>
+                    <span class="nav-label"><?= esc($item['label']) ?></span>
                 </a>
             </li>
         <?php endforeach; ?>
@@ -44,7 +53,9 @@ $navItems = [
     <div class="sidebar-actions">
         <a href="<?= esc(base_url('logout'), 'attr') ?>" class="btn-sidebar-logout">
             <i class="bi bi-box-arrow-right"></i>
-            Déconnexion
+            <span class="nav-label">Déconnexion</span>
         </a>
     </div>
 </aside>
+
+<script src="<?= base_url('script/sidebar.js') ?>"></script>

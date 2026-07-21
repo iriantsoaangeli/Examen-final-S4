@@ -19,7 +19,8 @@ async function fetchPrefixes() {
         return prefixCache;
     }
 
-    const response = await fetch('/api/prefix', {
+    const apiUrl = window.PREFIX_API_URL || '/api/prefix';
+    const response = await fetch(apiUrl, {
         headers: { 'Accept': 'application/json' },
     });
 

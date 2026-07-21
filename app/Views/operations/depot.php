@@ -28,6 +28,13 @@ $numero = (string) (session()->get('numero') ?? '');
 		<?php endif; ?>
 
 		<div class="card-ledger p-4">
+			<div class="op-header">
+				<div class="icon-badge" style="background:#E7F1EA; color:var(--accent-dark);"><i class="bi bi-plus-lg"></i></div>
+				<div>
+					<div class="op-title">Nouveau dépôt</div>
+					<div class="op-sub">Créditez votre compte instantanément.</div>
+				</div>
+			</div>
 			<form action="<?= base_url('operations/depot') ?>" method="post" class="row g-3">
 				<div class="col-12 col-md-6">
 					<label class="form-label">Compte à créditer</label>

@@ -28,6 +28,13 @@ $numero = (string) (session()->get('numero') ?? '');
 		<?php endif; ?>
 
 		<div class="card-ledger p-4">
+			<div class="op-header">
+				<div class="icon-badge" style="background:#E9EEFB; color:#2A4FD6;"><i class="bi bi-arrow-left-right"></i></div>
+				<div>
+					<div class="op-title">Nouveau transfert</div>
+					<div class="op-sub">Envoyez de l'argent vers un autre compte.</div>
+				</div>
+			</div>
 			<form action="<?= base_url('operations/transfert') ?>" method="post" class="row g-3">
 				<div class="col-12 col-md-6">
 					<label class="form-label">Votre numéro</label>

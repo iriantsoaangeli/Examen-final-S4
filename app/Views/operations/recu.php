@@ -51,13 +51,13 @@ if ($receipt !== null) {
           <div class="receipt-top">
             <div class="receipt-status"><i class="bi bi-check-lg"></i></div>
             <div class="receipt-headline">
-              Vous avez <?= esc($verbe) ?> <b><?= number_format((float) $receipt['montant'], 2) ?>Ar</b>
+              Vous avez <?= esc($verbe) ?> <b>Ar <?= number_format((float) $receipt['montant'], 2) ?></b>
               <?= $type === 'retrait' ? '' : ($isSender ? 'à' : 'de') ?>
             </div>
             <?php if ($type !== 'retrait') : ?>
               <div class="receipt-headline"><b style="font-size:16px;"><?= esc($contrepartie) ?></b></div>
             <?php endif; ?>
-            <div class="receipt-amount font-mono"><?= number_format((float) $receipt['montant'], 2) ?>Ar</div>
+            <div class="receipt-amount font-mono">Ar <?= number_format((float) $receipt['montant'], 2) ?></div>
           </div>
 
           <div class="receipt-body">
@@ -71,19 +71,19 @@ if ($receipt !== null) {
             </div>
             <div class="receipt-line">
               <span class="k">Montant nominal</span>
-              <span class="v"><?= number_format((float) $receipt['montant'], 2) ?>Ar</span>
+              <span class="v">Ar <?= number_format((float) $receipt['montant'], 2) ?></span>
             </div>
             <div class="receipt-line">
               <span class="k">Frais</span>
               <span class="v" style="color:var(--accent-dark);">
-                <?= (float) $receipt['frais'] > 0 ? number_format((float) $receipt['frais'], 2) . 'Ar' : 'Gratuit' ?>
+                <?= (float) $receipt['frais'] > 0 ? 'Ar ' . number_format((float) $receipt['frais'], 2) : 'Gratuit' ?>
               </span>
             </div>
             <?php if (!empty($receipt['commission']) && (float) $receipt['commission'] > 0) : ?>
               <div class="receipt-line">
                 <span class="k">Commission</span>
                 <span class="v" style="color:var(--accent-dark);">
-                  <?= number_format((float) $receipt['commission'], 2) ?>Ar
+                  Ar <?= number_format((float) $receipt['commission'], 2) ?>
                 </span>
               </div>
             <?php endif; ?>
