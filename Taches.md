@@ -115,7 +115,7 @@ mvt_details :
         multiple disponible                 
   - [x] Modifier Controllers\operations\Operation pour              (Angeli)
         splitter lors d'envoi multiple  
-  - [ ] modifier log in pour inclure si l'user est un operateur     (Angeli)
+  - [x] modifier log in pour inclure si l'user est un operateur     (Angeli)
   - [x] Creer la page Situation gain via differents frais           (Randy)
     - [x] Ajouter situation de montant pour chaque operateur        (Randy)
     - [x] Renommer Rapport en Commission                            (Randy)
